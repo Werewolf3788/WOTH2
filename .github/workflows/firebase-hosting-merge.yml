@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 18
 
-      # Line 25: Run the master seed script using your GitHub Secrets
+      # Line 25: Pass the secrets into process.env for seed-rtdb.js
       - name: Run RTDB Seed Script
         env:
           FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
