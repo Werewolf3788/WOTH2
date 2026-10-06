@@ -1,21 +1,19 @@
-# Way of the Hunter 2 Companion & Herd Tracker
+# Way of the Hunter 2 Companion & Ecosystem Engine
 
-A community-driven, open-source companion dashboard and herd genetics tracker for **Way of the Hunter 2**. 
+A community-driven, open-source companion dashboard and ecosystem tracker for **Way of the Hunter 2**.
 
-Designed for both field use and dual-screen workflow on PC, PlayStation 5, and Xbox Series X|S. This tool lets players track herd fitness, log need zones, diagnose blood trails, and reference weapon ethics without complex build environments.
+Designed for field use and dual-screen workflow on PC, PlayStation 5, and Xbox Series X|S. This tool lets players track herd fitness, log seasonal trails, monitor natural mortality clocks, and calculate ethical caliber pairings with zero build steps.
 
 ---
 
 ## 🌟 Key Features
 
-* **Multi-Tenant Hunter Profiles:** Sign in with Google to create an isolated personal hunting journal stored in Firebase Realtime Database. Guest mode automatically falls back to `localStorage` with offline write-protection.
-* **Isolated Regional Genetics Engine:** Full mapping of New Laurentia's 7 distinct regions (Wetiko Foothills, Slalakum Shore, Thunderbird Muskeg, Jackalope Cordillera, Kermode Plateau, Lake Sasquatch, Mishipeshu Swamp), reflecting independent regional herd fitness calculations.
-* **Decimal Fitness & Culling Advisor:** Evaluate exact in-game fitness percentages (e.g., 53.8% vs. 78.8%+) with instant culling recommendations (Cull Immediately, Average Herd Member, or Protected Trophy Breeder).
-* **Hit Blood Diagnostics:** Rapid field evaluation for vital hits, liver damage, digestive tract perforations, and non-fatal flesh scratches.
-* **Complete Campaign & Task Trackers:**
-  * **33 Story & Local Missions:** Full objectives, contacts (Angel, Mikael, Juniper, Regina, Patrick), and payouts.
-  * **32 Habitat Enhancements:** Detailed costs and requirements for repairing bridges, clearing boulder passages, installing feeders, and treating polluted waters.
-* **Weapon & Caliber Ethics Guide:** Tier 1 through Tier 8 ethical weapon recommendations, covering everything from .22 LR small game to .375 magnum dangerous game.
+* **Biological Mortality & Lifecycle Clock:** Tracks the 3-day in-game year lifecycle across all 15 native launch species. Features early-warning timers to ensure 5-star trophy animals are harvested before they die of old age and despawn permanently.
+* **Seasonal Migration & Grazing Corridors:** Toggle between Summer high-elevation paths and Winter lowland valley corridors. Track cloven hoof V-splits to intercept moving herds in broad grazing zones.
+* **Regional Population Stewardship:** Monitor the 5-tier health rating (Critical to Thriving) across New Laurentia's 7 sectors. Keep track of culling quotas and environmental remediation tasks (feeders, clean lakes, invasive weed eradication).
+* **Multi-Tenant Cloud Sync:** Sign in with Google to manage personal private pins and harvest logs stored directly in Firebase Realtime Database. Guest mode automatically falls back to write-protected `localStorage`.
+* **Hit Blood Diagnostics:** Instant field evaluation for vital oxygenated bubbles, liver crimson blood, digestive tract food spatter, and superficial flesh scratches.
+* **33 Story Missions & 32 Infrastructure Tasks:** Complete breakdown of NPC objectives, cash payouts, bridge repair costs, and hunting stand construction requirements.
 
 ---
 
@@ -24,9 +22,12 @@ Designed for both field use and dual-screen workflow on PC, PlayStation 5, and X
 ```text
 ├── data/
 │   ├── infrastructure.json  # All 32 enhancement costs, bridge repairs, & feeder tasks
-│   ├── missions.json        # All 33 campaign and campsite mission objectives & rewards
-│   ├── regions.json         # 7 New Laurentia regions, NPCs, and genetic isolation rules
-│   └── species.json         # 15 native launch species, tiers (1–8), and regional distribution
+│   ├── lifecycles.json      # Lifespans, aging stages, & mortality despawn rules
+│   ├── missions.json        # 33 campaign and campsite mission objectives & rewards
+│   ├── regions.json         # 7 New Laurentia regions, NPCs, & genetic isolation rules
+│   ├── species.json         # 15 native species, tiers (1–8), & regional distribution
+│   ├── stewardship.json     # Regional health metrics, culling quotas, & habitat tiers
+│   └── trails.json          # Summer/Winter migration paths & grazing corridors
 ├── assets/
 │   ├── css/
 │   │   └── style.css        # Sleek, high-contrast dark theme
