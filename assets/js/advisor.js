@@ -1,5 +1,5 @@
 // Line 1: Way of the Hunter 2 - Field Guide & Genetics Advisor Engine
-// Stamped: 2026-10-05 20:12 EDT | Version: 1.0.0
+// Stamped: 2026-10-05 20:16 EDT | Version: 1.0.0
 
 export const BloodDiagnostics = {
   pink_oxygenated: {
@@ -30,7 +30,13 @@ export const BloodDiagnostics = {
 
 export function evaluateHerdFitness(percentage) {
   const val = parseFloat(percentage);
-  if (isNaN(val)) return { label: "Invalid Input", action: "Enter numeric percentage", status: "neutral" };
+  if (isNaN(val)) {
+    return { 
+      label: "Invalid Input", 
+      action: "Enter numeric percentage", 
+      status: "neutral" 
+    };
+  }
 
   if (val < 55.0) {
     return {
