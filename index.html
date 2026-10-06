@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Way of the Hunter 2 - Co-Op Hunting Tracker</title>
+  
+  <link rel="icon" type="image/jpeg" href="//playstation-be936.web.app/favicon.ico" />
+  <link rel="apple-touch-icon" href="//playstation-be936.web.app/favicon.ico" />
+
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --panel-dark: #1e293b;
+      --accent-gold: #f59e0b;
+      --accent-green: #10b981;
+      --accent-blue: #3b82f6;
+      --accent-red: #ef4444;
+      --text-main: #f8fafc;
+      --text-dim: #94a3b8;
+      --border: #334155;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Top Sleek Navigation Header */
+    header {
+      background: var(--panel-dark);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    .auth-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input, select, button {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      min-height: 44px;
+    }
+
+    button {
+      cursor: pointer;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    button:hover { opacity: 0.9; }
+
+    .btn-gold { background: var(--accent-gold); color: #000; border: none; }
+    .btn-green { background: var(--accent-green); color: #fff; border: none; }
+    .btn-red { background: var(--accent-red); color: #fff; border: none; }
+
+    /* Layout Grid */
+    .dashboard {
+      display: grid;
+      grid-template-columns: 340px 1fr 340px;
+      gap: 16px;
+      padding: 16px;
+      flex: 1;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard { grid-template-columns: 1fr; }
+    }
+
+    .panel {
+      background: var(--panel-dark);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow-y: auto;
+    }
+
+    .panel h2 {
+      font-size: 1.05rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      color: var(--accent-gold);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .data-table th, .data-table td {
+      padding: 8px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .data-table th { color: var(--text-dim); }
+
+    .pin-card {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pin-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .tag-mature { background: var(--accent-gold); color: #000; }
+    .tag-cull { background: var(--accent-red); color: #fff; }
+    .tag-zone { background: var(--accent-blue); color: #fff; }
+
+    footer {
+      background: var(--panel-dark);
+      border-top: 1px solid var(--border);
+      padding: 8px 16px;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="brand">
+      <span>🌲 Way of the Hunter 2 Companion</span>
+    </div>
+
+    <div class="auth-bar" id="authSection">
+      <button id="btnLogin" class="btn-gold">Sign in with Google</button>
+      <div id="userProfile" style="display: none; align-items: center; gap: 8px;">
+        <span>Hunter: <strong id="hunterTagText">Werewolf</strong></span>
+        <button id="btnLogout" style="padding: 4px 8px; min-height: 32px;">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Multi-Column Dashboard -->
+  <main class="dashboard">
+    
+    <!-- Left Column: Reserve Overview & Ethics Quick Chart -->
+    <section class="panel">
+      <h2>Reserve Explorer</h2>
+      <label for="reserveSelect" style="font-size: 0.85rem; color: var(--text-dim);">Select Active Reserve:</label>
+      <select id="reserveSelect">
+        <option value="new_laurentia">New Laurentia (Canada)</option>
+        <option value="kilimaya">Kilimaya Reserve (Africa)</option>
+      </select>
+
+      <div style="background: #0f172a; padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
+        <p style="font-size: 0.85rem; color: var(--text-dim);">Known Reserve Landmarks:</p>
+        <p style="font-size: 0.9rem; margin-top: 4px;" id="reserveStats">1 Lodge | 3 Cabins | 16 Campsites | 10 Stands</p>
+      </div>
+
+      <h2>Weapon Ethics Reference</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Class / Target</th>
+            <th>Recommended Caliber</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Small Game (Hares/Ptarmigan)</td>
+            <td><strong>.22 LR / 12ga</strong></td>
+          </tr>
+          <tr>
+            <td>Medium Game (Deer / Boar / Wolf)</td>
+            <td><strong>6.5mm / .30-06</strong></td>
+          </tr>
+          <tr>
+            <td>Large Game (Elk / Moose / Bear)</td>
+            <td><strong>.30-06 / .300 Win Mag</strong></td>
+          </tr>
+          <tr>
+            <td>Heavy / Dangerous (Bison / Buff)</td>
+            <td><strong>.338 Lapua / .375</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Center Column: Co-Op Marker & Sighting Dispatcher -->
+    <section class="panel">
+      <h2>Log Sighting or Marker</h2>
+      
+      <form id="markerForm" style="display: flex; flex-direction: column; gap: 10px;">
+        <div>
+          <label style="font-size: 0.85rem; color: var(--text-dim);">Species</label>
+          <select id="pinSpecies" style="width: 100%;">
+            <option value="Wood Bison">Wood Bison</option>
+            <option value="Rocky Mountain Elk">Rocky Mountain Elk</option>
+            <option value="Western Moose">Western Moose</option>
+            <option value="White-Tailed Deer">White-Tailed Deer</option>
+            <option value="Rocky Mountain Mule Deer">Rocky Mountain Mule Deer</option>
+            <option value="Grizzly Bear">Grizzly Bear</option>
+            <option value="Northwestern Wolf">Northwestern Wolf</option>
+            <option value="Central European Boar">Central European Boar</option>
+            <option value="Eastern Wild Turkey">Eastern Wild Turkey</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div>
+            <label style="font-size: 0.85rem; color: var(--text-dim);">Category</label>
+            <select id="pinCategory" style="width: 100%;">
+              <option value="mature">5-Star Trophy Male</option>
+              <option value="cull">Cull Target (Low Fitness)</option>
+              <option value="zone">Need Zone (Drink/Feed/Rest)</option>
+              <option value="blood">Blood Trail / Harvest</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.85rem; color: var(--text-dim);">Fitness % / Rating</label>
+            <input type="text" id="pinFitness" placeholder="e.g. 52% (Cull) or 5-Star" style="width: 100%;" />
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 0.85rem; color: var(--text-dim);">Location / Landmarks / Sector</label>
+          <input type="text" id="pinLocation" placeholder="e.g. Sulkom Shore delta, water edge" required style="width: 100%;" />
+        </div>
+
+        <button type="submit" class="btn-green" style="margin-top: 6px;">Sync Marker to Firebase</button>
+      </form>
+
+      <h2 style="margin-top: 10px;">Active Co-Op Feed (Realtime)</h2>
+      <div id="liveMarkersFeed" style="display: flex; flex-direction: column; gap: 8px;">
+        <!-- Populated dynamically via Firebase Realtime Database -->
+      </div>
+    </section>
+
+    <!-- Right Column: Herd Fitness & Culling Advisor -->
+    <section class="panel">
+      <h2>Herd Genetics Advisor</h2>
+      <p style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.4;">
+        Fitness stays with an animal over its whole life. A 52% adult will never become a 5-star trophy. Cull low-percentage candidates across the habitat to raise replacement potential.
+      </p>
+
+      <div style="background: #0f172a; padding: 12px; border-radius: 6px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px;">
+        <label style="font-size: 0.85rem;">Fitness Inspection Test:</label>
+        <input type="number" id="testFitnessVal" placeholder="Enter Fitness % (e.g. 54)" min="1" max="100" />
+        <button id="btnCheckFitness" class="btn-gold" style="min-height: 36px;">Evaluate Candidate</button>
+        <div id="fitnessResult" style="font-size: 0.85rem; font-weight: 600; margin-top: 4px;"></div>
+      </div>
+
+      <h2>Infrastructure Tasks</h2>
+      <table class="data-table">
+        <tbody>
+          <tr>
+            <td>Damaged Bridges (9)</td>
+            <td>$1,215 – $3,220</td>
+          </tr>
+          <tr>
+            <td>Boulder Blockades (2)</td>
+            <td>$1,830 – $2,640</td>
+          </tr>
+          <tr>
+            <td>Fallen Trees (1)</td>
+            <td>$2,640</td>
+          </tr>
+          <tr>
+            <td>Habitat Boosters (12)</td>
+            <td>$2,355 – $3,540</td>
+          </tr>
+          <tr>
+            <td>Polluted Lake Cleanse (1)</td>
+            <td>$5,670</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <!-- Visible Stamped 24-Hour Footer -->
+  <footer>
+    <span>Way of the Hunter 2 Companion &bull; playstation-be936.web.app</span>
+    <span id="systemStamp">2026-10-05 19:56 EDT | v1.0.0</span>
+  </footer>
+
+  <!-- Firebase v9 Web SDK via Standard Browser CDN (Relative Protocol //) -->
+  <script type="module">
+    import { initializeApp } from "//www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "//www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import { getDatabase, ref, set, push, onValue } from "//www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+
+    // Production Firebase configuration pointing to your Entertainment RTDB backend
+    const firebaseConfig = {
+      apiKey: "AIzaSyDeuNBGHcwU4rFyOcsfGxLHjmEdpADacmc",
+      authDomain: "entertainment-71888.firebaseapp.com",
+      databaseURL: "https://entertainment-71888-default-rtdb.firebaseio.com",
+      projectId: "entertainment-71888",
+      storageBucket: "entertainment-71888.firebasestorage.app",
+      messagingSenderId: "660524340277",
+      appId: "1:660524340277:web:ef8f4ed04fa985a4f88d7c"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+    const provider = new GoogleAuthProvider();
+
+    let currentUser = null;
+    let currentReserve = "new_laurentia";
+
+    // DOM Null-checked initializers
+    document.addEventListener("DOMContentLoaded", () => {
+      const btnLogin = document.getElementById("btnLogin");
+      const btnLogout = document.getElementById("btnLogout");
+      const userProfile = document.getElementById("userProfile");
+      const hunterTagText = document.getElementById("hunterTagText");
+      const reserveSelect = document.getElementById("reserveSelect");
+      const markerForm = document.getElementById("markerForm");
+      const liveMarkersFeed = document.getElementById("liveMarkersFeed");
+      const btnCheckFitness = document.getElementById("btnCheckFitness");
+      const fitnessResult = document.getElementById("fitnessResult");
+
+      // 1. Session Observer (indexedDB safe gate)
+      onAuthStateChanged(auth, (user) => {
+        currentUser = user;
+        if (user) {
+          btnLogin.style.display = "none";
+          userProfile.style.display = "flex";
+          hunterTagText.textContent = user.displayName || "Werewolf";
+        } else {
+          btnLogin.style.display = "block";
+          userProfile.style.display = "none";
+        }
+      });
+
+      // 2. Auth handlers
+      if (btnLogin) {
+        btnLogin.addEventListener("click", async () => {
+          try {
+            await signInWithPopup(auth, provider);
+          } catch (err) {
+            console.error("Sign-in issue:", err);
+            alert("Login canceled or blocked: " + err.message);
+          }
+        });
+      }
+
+      if (btnLogout) {
+        btnLogout.addEventListener("click", () => signOut(auth));
+      }
+
+      // 3. Reserve selector switch
+      if (reserveSelect) {
+        reserveSelect.addEventListener("change", (e) => {
+          currentReserve = e.target.value;
+          bindReserveSync(currentReserve);
+        });
+      }
+
+      // 4. Marker Submission Gate
+      if (markerForm) {
+        markerForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const species = document.getElementById("pinSpecies").value;
+          const category = document.getElementById("pinCategory").value;
+          const fitness = document.getElementById("pinFitness").value || "N/A";
+          const location = document.getElementById("pinLocation").value;
+
+          const hunterName = currentUser ? (currentUser.displayName || "Hunter") : "Werewolf (Local)";
+
+          const markerPayload = {
+            hunter: hunterName,
+            species,
+            category,
+            fitness,
+            location,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          };
+
+          try {
+            const markersRef = ref(db, `woth2_sessions/${currentReserve}/pins`);
+            await push(markersRef, markerPayload);
+            document.getElementById("pinLocation").value = "";
+            document.getElementById("pinFitness").value = "";
+          } catch (err) {
+            console.warn("RTDB write protected or offline. Saving to localStorage fallback.", err);
+            saveLocalFallback(markerPayload);
+          }
+        });
+      }
+
+      // 5. Culling evaluation rule checker
+      if (btnCheckFitness) {
+        btnCheckFitness.addEventListener("click", () => {
+          const val = parseInt(document.getElementById("testFitnessVal").value, 10);
+          if (isNaN(val)) return;
+
+          if (val < 55) {
+            fitnessResult.textContent = `${val}%: CULL TARGET - Remove to improve herd genetics.`;
+            fitnessResult.style.color = "var(--accent-red)";
+          } else if (val >= 55 && val <= 75) {
+            fitnessResult.textContent = `${val}%: AVERAGE - Monitor adult development before harvest.`;
+            fitnessResult.style.color = "var(--accent-gold)";
+          } else {
+            fitnessResult.textContent = `${val}%: HIGH POTENTIAL BREEDER - Protect until 5-star trophy!`;
+            fitnessResult.style.color = "var(--accent-green)";
+          }
+        });
+      }
+
+      // 6. Realtime Listener with Write-Protection Gate
+      function bindReserveSync(reserveKey) {
+        try {
+          const feedRef = ref(db, `woth2_sessions/${reserveKey}/pins`);
+          onValue(feedRef, (snapshot) => {
+            if (snapshot.exists()) {
+              const data = snapshot.val();
+              renderMarkers(Object.values(data));
+              // Write-protection gate: verify snapshot before overwriting local storage
+              localStorage.setItem(`woth2_${reserveKey}_pins`, JSON.stringify(data));
+            } else {
+              // Fallback to local storage if node is empty
+              const cached = localStorage.getItem(`woth2_${reserveKey}_pins`);
+              if (cached) renderMarkers(Object.values(JSON.parse(cached)));
+            }
+          });
+        } catch (err) {
+          console.warn("Using offline localStorage fallback:", err);
+          const cached = localStorage.getItem(`woth2_${reserveKey}_pins`);
+          if (cached) renderMarkers(Object.values(JSON.parse(cached)));
+        }
+      }
+
+      function renderMarkers(items) {
+        liveMarkersFeed.innerHTML = "";
+        items.slice(-8).reverse().forEach(pin => {
+          const card = document.createElement("div");
+          card.className = "pin-card";
+
+          let tagClass = "tag-zone";
+          if (pin.category === "mature") tagClass = "tag-mature";
+          if (pin.category === "cull") tagClass = "tag-cull";
+
+          card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong>${pin.species}</strong>
+              <span class="pin-tag ${tagClass}">${pin.category.toUpperCase()}</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-dim);">${pin.location} &bull; Rating/Fitness: ${pin.fitness}</p>
+            <span style="font-size: 0.75rem; color: #64748b;">Logged by ${pin.hunter} at ${pin.timestamp}</span>
+          `;
+          liveMarkersFeed.appendChild(card);
+        });
+      }
+
+      function saveLocalFallback(item) {
+        const key = `woth2_${currentReserve}_pins`;
+        const existing = JSON.parse(localStorage.getItem(key) || "[]");
+        existing.push(item);
+        localStorage.setItem(key, JSON.stringify(existing));
+        renderMarkers(existing);
+      }
+
+      // Initial binding
+      bindReserveSync(currentReserve);
+    });
+  </script>
+</body>
+</html>
