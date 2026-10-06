@@ -1,6 +1,8 @@
-# Line 1: Automated Sync of Entire WOTH2 Data Directory to Firebase RTDB
+# Line 1: Way of the Hunter 2 - GitHub Actions RTDB Deployment Workflow
+# Line 2: Version: 1.0.0 | Updated: 2026-10-06 05:16 EDT
 name: Sync WOTH2 Ecosystem to Firebase RTDB
 
+# Line 5: Trigger sync on any commit pushed to main affecting data or scripts, or allow manual trigger
 on:
   push:
     branches:
@@ -8,22 +10,35 @@ on:
     paths:
       - 'data/**'
       - 'scripts/**'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+# Line 16: Ensure only one sync deployment runs at a time to prevent database write collisions
+concurrency:
+  group: rtdb-sync-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   sync_rtdb:
+    name: Seed RTDB Cloud Nodes
     runs-on: ubuntu-latest
-    steps:
-      # Line 15: Checkout the full repository tree
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+    timeout-minutes: 5
 
-      # Line 19: Set up Node.js for seeding
-      - name: Set up Node.js
+    steps:
+      # Line 28: Checkout full repository tree with submodules if any
+      - name: Checkout Repository Tree
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      # Line 34: Set up Node.js v18 LTS environment
+      - name: Set up Node.js Environment
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache-dependency-path: package-lock.json
 
-      # Line 25: Pass the secrets into process.env for seed-rtdb.js
+      # Line 41: Execute the universal seeder script with injected repository secrets
       - name: Run RTDB Seed Script
         env:
           FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
