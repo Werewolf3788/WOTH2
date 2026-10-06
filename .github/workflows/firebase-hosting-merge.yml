@@ -1,22 +1,32 @@
-name: Sync Game Data to Firebase RTDB
+# Line 1: Automated Sync of Entire WOTH2 Data Directory to Firebase RTDB
+name: Sync WOTH2 Ecosystem to Firebase RTDB
 
 on:
   push:
-    paths:
-      - 'game_data.json'
     branches:
       - main
+    paths:
+      - 'data/**'
+      - 'scripts/**'
 
 jobs:
-  sync_to_firebase:
+  sync_rtdb:
     runs-on: ubuntu-latest
     steps:
+      # Line 15: Checkout the full repository tree
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Push JSON to Firebase Realtime Database
+      # Line 19: Set up Node.js for seeding
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Line 25: Run the master seed script using your GitHub Secrets
+      - name: Run RTDB Seed Script
+        env:
+          FIREBASE_DATABASE_URL: ${{ secrets.FIREBASE_DATABASE_URL }}
+          FIREBASE_AUTH_SECRET: ${{ secrets.FIREBASE_AUTH_SECRET }}
         run: |
-          curl -X PUT \
-            "${{ secrets.FIREBASE_DATABASE_URL }}/game_data.json?auth=${{ secrets.FIREBASE_AUTH_SECRET }}" \
-            -H "Content-Type: application/json" \
-            -d @game_data.json
+          node scripts/seed-rtdb.js
