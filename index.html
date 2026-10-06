@@ -1,31 +1,16 @@
 <!DOCTYPE html>
-<!-- Line 1: Way of the Hunter 2 - Community Companion & Lifecycle Engine -->
-<!-- Stamped: 2026-10-05 21:38 EDT | Version: 2.4.0 -->
+<!-- Line 1: Way of the Hunter 2 - Personal Harvest Log & Mortality Tracker -->
+<!-- Stamped: 2026-10-05 21:55 EDT | Firebase Sync Target: /utm_links | Version: 2.5.0 -->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Way of the Hunter 2 Companion & Herd Tracker | New Laurentia</title>
+  <title>Way of the Hunter 2 - Field Log & Trophy Tracker</title>
 
-  <!-- Canonical & Search Engine Meta -->
-  <meta name="description" content="Open-source companion app for Way of the Hunter 2. Track decimal herd fitness, aggressive charge triggers, lifespans, and New Laurentia missions." />
-  <meta name="keywords" content="Way of the Hunter 2, WOTH2, herd management, fitness culling, New Laurentia, animal lifespans, aggressive animals, companion app" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="//playstation-be936.web.app/" />
-
-  <!-- Open Graph / Unified Social Preview -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="//playstation-be936.web.app/" />
-  <meta property="og:title" content="Way of the Hunter 2 Companion & Herd Tracker" />
-  <meta property="og:description" content="Manage herd genetics, track seasonal trails, monitor animal lifespans, and diagnose blood trails." />
-  <meta property="og:image" content="//playstation-be936.web.app/favicon.ico" />
-
-  <!-- Unified Branding Favicon & Touch Icon -->
   <link rel="icon" type="image/jpeg" href="//playstation-be936.web.app/favicon.ico" />
   <link rel="apple-touch-icon" href="//playstation-be936.web.app/favicon.ico" />
 
   <style>
-    /* Section 1: Color Tokens & High-Contrast Design Palette */
     :root {
       --bg-dark: #070d18;
       --panel-dark: #121c2d;
@@ -34,8 +19,6 @@
       --accent-green: #10b981;
       --accent-blue: #38bdf8;
       --accent-red: #ef4444;
-      --accent-purple: #c084fc;
-      --hazard-crimson: #b91c1c;
       --text-main: #f8fafc;
       --text-dim: #94a3b8;
       --border: #28374d;
@@ -51,7 +34,6 @@
       min-height: 100vh;
     }
 
-    /* Section 2: Header, Nav, and Touch Targets */
     header {
       background: var(--panel-dark);
       border-bottom: 1px solid var(--border);
@@ -72,20 +54,19 @@
       color: var(--accent-gold);
     }
 
-    .brand img {
-      width: 28px;
-      height: 28px;
-      border-radius: 4px;
-    }
-
-    .auth-bar {
+    .game-clock-bar {
+      background: #0b1322;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 10px;
+      gap: 16px;
+      font-size: 0.9rem;
     }
 
     nav.tab-bar {
-      background: #0b1322;
+      background: #080f1e;
       border-bottom: 1px solid var(--border);
       padding: 0 20px;
       display: flex;
@@ -98,13 +79,12 @@
       border: none;
       border-bottom: 3px solid transparent;
       color: var(--text-dim);
-      padding: 12px 14px;
-      font-size: 0.85rem;
+      padding: 12px 16px;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
-      border-radius: 0;
-      white-space: nowrap;
       min-height: 44px;
+      white-space: nowrap;
     }
 
     .nav-tab.active {
@@ -122,33 +102,24 @@
       min-height: 44px;
     }
 
-    button {
-      cursor: pointer;
-      font-weight: 600;
-      transition: opacity 0.2s;
-    }
+    button { cursor: pointer; font-weight: 600; transition: opacity 0.2s; }
     button:hover { opacity: 0.9; }
 
     .btn-gold { background: var(--accent-gold); color: #000; border: none; }
     .btn-green { background: var(--accent-green); color: #fff; border: none; }
     .btn-red { background: var(--accent-red); color: #fff; border: none; }
 
-    /* Section 3: Responsive Multi-Column Layout Grid */
-    .tab-content {
-      display: none;
-      padding: 16px;
-      flex: 1;
-    }
+    .tab-content { display: none; padding: 16px; flex: 1; }
     .tab-content.active { display: block; }
 
-    .dashboard-grid {
+    .two-col-grid {
       display: grid;
-      grid-template-columns: 360px 1fr 360px;
+      grid-template-columns: 420px 1fr;
       gap: 16px;
     }
 
-    @media (max-width: 1100px) {
-      .dashboard-grid { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .two-col-grid { grid-template-columns: 1fr; }
     }
 
     .panel {
@@ -159,7 +130,6 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      overflow-y: auto;
     }
 
     .panel h2 {
@@ -167,6 +137,16 @@
       border-bottom: 1px solid var(--border);
       padding-bottom: 8px;
       color: var(--accent-gold);
+    }
+
+    .card {
+      background: var(--card-dark);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
     .data-table {
@@ -183,32 +163,13 @@
 
     .data-table th { color: var(--text-dim); }
 
-    .pin-card, .list-card {
-      background: var(--card-dark);
-      border: 1px solid var(--border);
-      padding: 12px;
-      border-radius: 6px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    /* Section 4: Visual Status Badges */
-    .pin-tag {
-      font-size: 0.75rem;
-      font-weight: 700;
+    .tag-badge {
+      display: inline-block;
       padding: 2px 8px;
       border-radius: 4px;
-      display: inline-block;
-      width: fit-content;
+      font-size: 0.75rem;
+      font-weight: 700;
     }
-
-    .tag-mature { background: var(--accent-gold); color: #000; }
-    .tag-cull { background: var(--accent-red); color: #fff; }
-    .tag-zone { background: var(--accent-blue); color: #000; }
-    .tag-trail { background: var(--accent-purple); color: #000; }
-    .tag-blood { background: #be185d; color: #fff; }
-    .tag-danger { background: var(--hazard-crimson); color: #fff; font-weight: 800; border: 1px solid #f87171; }
 
     footer {
       background: var(--panel-dark);
@@ -223,14 +184,12 @@
 </head>
 <body>
 
-  <!-- Line 172: Header Navigation & Authentication -->
+  <!-- Top Header Navigation & Auth -->
   <header>
     <div class="brand">
-      <img src="//playstation-be936.web.app/favicon.ico" alt="" />
-      <span>🌲 Way of the Hunter 2 &bull; Ecosystem Companion</span>
+      <span>🌲 Way of the Hunter 2 &bull; Harvest & Herd Tracker</span>
     </div>
-
-    <div class="auth-bar" id="authSection">
+    <div id="authSection" style="display: flex; align-items: center; gap: 10px;">
       <button id="btnLogin" class="btn-gold">Sign in with Google</button>
       <div id="userProfile" style="display: none; align-items: center; gap: 8px;">
         <span>Hunter: <strong id="hunterTagText">Guest</strong></span>
@@ -239,237 +198,240 @@
     </div>
   </header>
 
-  <!-- Line 189: Navigation Tabs -->
+  <!-- In-Game Calendar & Clock Tracker -->
+  <div class="game-clock-bar">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <label for="currentInGameDay" style="color: var(--accent-gold); font-weight: 700;">In-Game Day:</label>
+      <input type="number" id="currentInGameDay" value="1" min="1" max="999" style="width: 80px; min-height: 36px;" />
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <label for="currentInGameTime" style="color: var(--accent-gold); font-weight: 700;">Time of Day:</label>
+      <input type="time" id="currentInGameTime" value="08:00" style="min-height: 36px;" />
+    </div>
+    <span style="color: var(--text-dim); font-size: 0.8rem;">(3 In-Game Days = 1 Herd Generation Year)</span>
+  </div>
+
+  <!-- Navigation Tabs -->
   <nav class="tab-bar">
-    <button class="nav-tab active" data-tab="tab-map">Field Tracker & Hazards</button>
-    <button class="nav-tab" data-tab="tab-lifecycles">Mortality & Lifespans</button>
-    <button class="nav-tab" data-tab="tab-stewardship">Habitat Stewardship</button>
+    <button class="nav-tab active" data-tab="tab-kills">Kill & Harvest Log</button>
+    <button class="nav-tab" data-tab="tab-watchlist">Target Watchlist & Mortality Clock</button>
+    <button class="nav-tab" data-tab="tab-zones">Need Zones & Best Times</button>
     <button class="nav-tab" data-tab="tab-missions">Missions (33)</button>
     <button class="nav-tab" data-tab="tab-infrastructure">Infrastructure (32)</button>
-    <button class="nav-tab" data-tab="tab-ethics">Weapon & Defense Tiers (1-8)</button>
   </nav>
 
-  <!-- Line 200: TAB 1 - Field Tracker, Seasonal Trails & Hazard Alerter -->
-  <div id="tab-map" class="tab-content active">
-    <div class="dashboard-grid">
+  <!-- TAB 1: Kill & Harvest Log (Saves to RTDB /harvests) -->
+  <div id="tab-kills" class="tab-content active">
+    <div class="two-col-grid">
       
-      <!-- Panel 1A: Region & Season Corridors -->
+      <!-- Harvest Form -->
       <section class="panel">
-        <h2>Regional Habitat Select</h2>
-        <label for="regionSelect" style="font-size: 0.85rem; color: var(--text-dim);">Active Region (Isolated Genetics):</label>
-        <select id="regionSelect">
-          <option value="wetiko_foothills">Wetiko Foothills (Mikael Anderson)</option>
-          <option value="slalakum_shore">Slalakum Shore (Juniper)</option>
-          <option value="thunderbird_muskeg">Thunderbird Muskeg (Regina Harper)</option>
-          <option value="jackalope_cordillera">Jackalope Cordillera (Patrick Harper)</option>
-          <option value="kermode_plateau">Kermode Plateau (Highlands)</option>
-          <option value="lake_sasquatch">Lake Sasquatch (Wetlands)</option>
-          <option value="mishipeshu_swamp">Mishipeshu Swamp (Swamplands)</option>
-        </select>
+        <h2>Record Completed Harvest</h2>
+        <form id="harvestForm" style="display: flex; flex-direction: column; gap: 10px;">
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Species</label>
+              <select id="harvestSpecies" style="width: 100%;"></select>
+            </div>
+            <div>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Region</label>
+              <select id="harvestRegion" style="width: 100%;">
+                <option value="Wetiko Foothills">Wetiko Foothills</option>
+                <option value="Slalakum Shore">Slalakum Shore</option>
+                <option value="Thunderbird Muskeg">Thunderbird Muskeg</option>
+                <option value="Jackalope Cordillera">Jackalope Cordillera</option>
+                <option value="Kermode Plateau">Kermode Plateau</option>
+                <option value="Lake Sasquatch">Lake Sasquatch</option>
+                <option value="Mishipeshu Swamp">Mishipeshu Swamp</option>
+              </select>
+            </div>
+          </div>
 
-        <h2>Seasonal Corridor Routes</h2>
-        <label for="seasonSelect" style="font-size: 0.85rem; color: var(--text-dim);">Active Season:</label>
-        <select id="seasonSelect">
-          <option value="summer">Summer (High Elevation Ridges & Shorelines)</option>
-          <option value="winter">Winter (Sheltered Lowland Valleys & Brush)</option>
-        </select>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Shot Distance (Yards)</label>
+              <input type="number" id="harvestDistance" placeholder="e.g. 185" required style="width: 100%;" />
+            </div>
+            <div>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Hit Location / Organ</label>
+              <select id="harvestOrgan" style="width: 100%;">
+                <option value="Heart">Heart (Instant Drop)</option>
+                <option value="Left Lung">Left Lung (Vital)</option>
+                <option value="Right Lung">Right Lung (Vital)</option>
+                <option value="Double Lung">Double Lung (Fatal Drop)</option>
+                <option value="Liver">Liver (Long Bleedout)</option>
+                <option value="Stomach">Stomach / Guts (Unethical)</option>
+                <option value="Neck / Spine">Neck / Spine</option>
+                <option value="Flesh / Non-Vital">Flesh / Non-Vital</option>
+              </select>
+            </div>
+          </div>
 
-        <div style="background: #070d18; padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
-          <span style="font-size: 0.8rem; color: var(--text-dim);">Seasonal Corridor Route:</span>
-          <p id="trailDetailText" style="font-size: 0.85rem; color: var(--accent-blue); margin-top: 4px;">Loading migration corridors...</p>
-        </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Trophy Rating (Stars)</label>
+              <select id="harvestTrophy" style="width: 100%;">
+                <option value="5-Star (Max Trophy / Diamond)">⭐⭐⭐⭐⭐ (5-Star / Diamond tier)</option>
+                <option value="4-Star">⭐⭐⭐⭐ (4-Star)</option>
+                <option value="3-Star">⭐⭐⭐ (3-Star)</option>
+                <option value="2-Star">⭐⭐ (2-Star)</option>
+                <option value="1-Star">⭐ (1-Star Low Fitness)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Ethical Hunt Rating</label>
+              <select id="harvestHuntRating" style="width: 100%;">
+                <option value="5-Star Hunt (Clean Vital / 1 Shot)">⭐⭐⭐⭐⭐ (Clean Vital, 1 Shot)</option>
+                <option value="4-Star Hunt">⭐⭐⭐⭐ (Minor meat damage)</option>
+                <option value="3-Star Hunt">⭐⭐⭐ (Overpowered caliber)</option>
+                <option value="2-Star Hunt">⭐⭐ (Multiple shots)</option>
+                <option value="1-Star Hunt">⭐ (Unethical / Guts)</option>
+              </select>
+            </div>
+          </div>
 
-        <div style="background: #070d18; padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
-          <span style="font-size: 0.8rem; color: var(--text-dim);">Wide Grazing Area:</span>
-          <p id="grazingDetailText" style="font-size: 0.85rem; color: var(--accent-green); margin-top: 4px;">Loading grazing areas...</p>
-        </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Weapon & Caliber Used</label>
+              <input type="text" id="harvestWeapon" placeholder="e.g. .30-06 Steyr Pro Hunter" required style="width: 100%;" />
+            </div>
+            <div>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Fitness % Recorded</label>
+              <input type="text" id="harvestFitness" placeholder="e.g. 96.5% or 42.1%" style="width: 100%;" />
+            </div>
+          </div>
 
-        <h2>Aggression & Charge Advisory</h2>
-        <div id="regionHazardBox" style="background: #070d18; padding: 10px; border-radius: 6px; border: 1px solid var(--hazard-crimson);">
-          <span style="font-size: 0.8rem; color: #f87171; font-weight: 700;">Local Dangerous Game:</span>
-          <p id="hazardAlertText" style="font-size: 0.85rem; color: var(--text-main); margin-top: 4px;">Evaluating regional predators...</p>
-        </div>
+          <button type="submit" class="btn-green">Save Harvest to Realtime Database</button>
+        </form>
       </section>
 
-      <!-- Panel 1B: Pin Logging Engine -->
+      <!-- Kill Feed -->
       <section class="panel">
-        <h2>Log Pin or In-Game Marker</h2>
-        
-        <form id="markerForm" style="display: flex; flex-direction: column; gap: 10px;">
+        <h2>Your Recorded Harvests</h2>
+        <div id="harvestList" style="display: flex; flex-direction: column; gap: 8px;"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- TAB 2: Live Watchlist & Mortality Clock (The Patience & Chance Engine) -->
+  <div id="tab-watchlist" class="tab-content">
+    <div class="two-col-grid">
+      
+      <!-- Add Target Form -->
+      <section class="panel">
+        <h2>Add Live Animal to Watchlist</h2>
+        <p style="font-size: 0.8rem; color: var(--text-dim);">
+          Saw a high-fitness buck or a low-fitness cull? Track what day you saw him so you can return before he dies of old age.
+        </p>
+
+        <form id="watchlistForm" style="display: flex; flex-direction: column; gap: 10px;">
+          <div>
+            <label style="font-size: 0.8rem; color: var(--text-dim);">Custom Nickname / Marker Label</label>
+            <input type="text" id="watchName" placeholder="e.g. Patience the Ram or Chance the Wolf" required style="width: 100%;" />
+          </div>
+
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div>
-              <label style="font-size: 0.85rem; color: var(--text-dim);">Species</label>
-              <select id="pinSpecies" style="width: 100%;"></select>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Species</label>
+              <select id="watchSpecies" style="width: 100%;"></select>
             </div>
             <div>
-              <label style="font-size: 0.85rem; color: var(--text-dim);">Pin / Hazard Category</label>
-              <select id="pinCategory" style="width: 100%;">
-                <option value="zone">Need Zone (Drink/Feed/Rest)</option>
-                <option value="trail">Seasonal Trail Waypoint</option>
-                <option value="grazing">Wide Grazing Corridor</option>
-                <option value="cull">Cull Target (<55% Fitness)</option>
-                <option value="mature">5-Star Trophy Male</option>
-                <option value="danger">⚠️ Aggressive Animal Hazard (Charge Risk)</option>
-                <option value="blood">Blood Trail / Hit Site</option>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Region</label>
+              <select id="watchRegion" style="width: 100%;">
+                <option value="Jackalope Cordillera">Jackalope Cordillera</option>
+                <option value="Kermode Plateau">Kermode Plateau</option>
+                <option value="Lake Sasquatch">Lake Sasquatch</option>
+                <option value="Mishipeshu Swamp">Mishipeshu Swamp</option>
+                <option value="Slalakum Shore">Slalakum Shore</option>
+                <option value="Thunderbird Muskeg">Thunderbird Muskeg</option>
+                <option value="Wetiko Foothills">Wetiko Foothills</option>
               </select>
             </div>
           </div>
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div>
-              <label style="font-size: 0.85rem; color: var(--text-dim);">Observed Life Stage</label>
-              <select id="pinStage" style="width: 100%;">
-                <option value="young">Young (Do Not Shoot)</option>
-                <option value="adult">Adult (Evaluating Genetics)</option>
-                <option value="mature_early">Mature Early (Trophy Window)</option>
-                <option value="mature_late">Mature Late (Urgent - Dying Soon)</option>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Observed Life Stage</label>
+              <select id="watchStage" style="width: 100%;">
+                <option value="Young">Young (1-3 yrs old)</option>
+                <option value="Adult">Adult (Mid-life)</option>
+                <option value="Mature Early">Mature Early (Growing Racks)</option>
+                <option value="Mature Late">Mature Late (Final Year Window!)</option>
               </select>
             </div>
             <div>
-              <label style="font-size: 0.85rem; color: var(--text-dim);">Fitness Decimal %</label>
-              <input type="text" id="pinFitness" placeholder="e.g. 53.8% or 88.5%" style="width: 100%;" />
-            </div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <div>
-              <label style="font-size: 0.85rem; color: var(--text-dim);">Blood Diagnostic</label>
-              <select id="pinBlood" style="width: 100%;">
-                <option value="none">No Hit Blood</option>
-                <option value="pink">Pink Bubbles (Lungs/Heart - Fatal)</option>
-                <option value="crimson">Dark Crimson (Liver - Fatal Track)</option>
-                <option value="stomach">Red + Food (Stomach - Slow)</option>
-                <option value="scratch">Low Red Volume (Scratch - Non-Fatal)</option>
-              </select>
-            </div>
-            <div>
-              <label style="font-size: 0.85rem; color: var(--text-dim);">Hoof Trail Heading</label>
-              <select id="pinHoofDirection" style="width: 100%;">
-                <option value="north">Northbound (V-Split Up)</option>
-                <option value="south">Southbound (V-Split Down)</option>
-                <option value="east">Eastbound (V-Split Right)</option>
-                <option value="west">Westbound (V-Split Left)</option>
-              </select>
+              <label style="font-size: 0.8rem; color: var(--text-dim);">Fitness Decimal %</label>
+              <input type="number" id="watchFitness" step="0.1" placeholder="e.g. 89.5" required style="width: 100%;" />
             </div>
           </div>
 
           <div>
-            <label style="font-size: 0.85rem; color: var(--text-dim);">Location Details / Landmark Sector</label>
-            <input type="text" id="pinLocation" placeholder="e.g. Willows 100m west of bridge, charging bear sighted" required style="width: 100%;" />
+            <label style="font-size: 0.8rem; color: var(--text-dim);">Observed Location / Landmarks</label>
+            <input type="text" id="watchLocation" placeholder="e.g. North rim crags 200m from camp" required style="width: 100%;" />
           </div>
 
-          <button type="submit" class="btn-green">Sync Marker to Cloud</button>
+          <button type="submit" class="btn-gold">Track Live Target in Watchlist</button>
         </form>
-
-        <h2 style="margin-top: 10px;">Active Regional Pins Feed</h2>
-        <div id="liveMarkersFeed" style="display: flex; flex-direction: column; gap: 8px;"></div>
       </section>
 
-      <!-- Panel 1C: Culling Diagnostics & Rules -->
+      <!-- Active Watchlist Feed with Dynamic Countdown -->
       <section class="panel">
-        <h2>Mortality Clock & Culling Engine</h2>
-        <div style="background: #070d18; padding: 12px; border-radius: 6px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px;">
-          <label style="font-size: 0.85rem;">Fitness Inspection Test:</label>
-          <input type="number" id="testFitnessVal" placeholder="e.g. 53.8" step="0.1" min="1" max="100" />
-          <button id="btnCheckFitness" class="btn-gold" style="min-height: 38px;">Run Genetics Test</button>
-          <div id="fitnessResult" style="font-size: 0.85rem; font-weight: 600; margin-top: 4px;"></div>
-        </div>
-
-        <h2>Aggression Defense Protocols</h2>
-        <div class="list-card" style="border-left: 4px solid var(--hazard-crimson);">
-          <strong style="color: #f87171;">Grizzly & Bison Charging</strong>
-          <span style="font-size: 0.8rem; color: var(--text-dim);">Approaching wounded game within 50m triggers immediate charge behavior. Equip a high-energy sidearm (.44 Mag or .454 Casull) when searching dense brush.</span>
-        </div>
-        <div class="list-card" style="border-left: 4px solid var(--accent-red);">
-          <strong style="color: var(--accent-red);">The 3-Day Natural Death Rule</strong>
-          <span style="font-size: 0.8rem; color: var(--text-dim);">3 in-game days = 1 in-game year. Unharvested mature animals die and despawn permanently at the end of their lifespan.</span>
-        </div>
+        <h2>Live Animal Trackers & Mortality Countdown</h2>
+        <div id="watchlistFeed" style="display: flex; flex-direction: column; gap: 10px;"></div>
       </section>
     </div>
   </div>
 
-  <!-- Line 357: TAB 2 - Species Lifespans & Mortality Clocks -->
-  <div id="tab-lifecycles" class="tab-content">
+  <!-- TAB 3: Need Zones & Schedules -->
+  <div id="tab-zones" class="tab-content">
     <div class="panel">
-      <h2>Species Lifespans & Natural Death Schedules (15 Native Species)</h2>
-      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 12px;">
-        Every 3 in-game days advances the ecosystem by 1 in-game year. Harvest mature animals before their final window closes.
+      <h2>Need Zone Schedules & Best Hunting Hours</h2>
+      <p style="font-size: 0.85rem; color: var(--text-dim);">
+        Herds rotate between drinking, feeding, and resting. Match your in-game clock to these windows to intercept herds.
       </p>
       <table class="data-table">
         <thead>
           <tr>
             <th>Species</th>
-            <th>Lifespan (Years / Days)</th>
-            <th>Young Phase</th>
-            <th>Adult Phase</th>
-            <th>Mature Phase (Harvest Window)</th>
-            <th>Mortality Despawn Warning</th>
+            <th>Primary Feeding Window</th>
+            <th>Primary Drinking Window</th>
+            <th>Resting / Bedding Window</th>
+            <th>Key Hunting Tip</th>
           </tr>
         </thead>
-        <tbody id="lifecycleTableBody"></tbody>
+        <tbody id="zonesTableBody"></tbody>
       </table>
     </div>
   </div>
 
-  <!-- Line 381: TAB 3 - Habitat Stewardship & Quality -->
-  <div id="tab-stewardship" class="tab-content">
-    <div class="panel">
-      <h2>Reserve Population Stewardship & Habitat Health</h2>
-      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 12px;">
-        Selective culling, feeder installations, and pollution cleanup lift the average genetic fitness of each region.
-      </p>
-      <div id="stewardshipGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px;"></div>
-    </div>
-  </div>
-
-  <!-- Line 392: TAB 4 - Campaign Missions (33) -->
+  <!-- TAB 4: Missions -->
   <div id="tab-missions" class="tab-content">
     <div class="panel">
-      <h2>New Laurentia Campaign & Local Missions (33 Total)</h2>
-      <div id="missionsList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-top: 10px;"></div>
+      <h2>New Laurentia Campaign Missions (33 Total)</h2>
+      <div id="missionsList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px;"></div>
     </div>
   </div>
 
-  <!-- Line 401: TAB 5 - Habitat Enhancements (32) -->
+  <!-- TAB 5: Infrastructure -->
   <div id="tab-infrastructure" class="tab-content">
     <div class="panel">
       <h2>Habitat Enhancements & Cleanups (32 Total)</h2>
-      <div id="infrastructureList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-top: 10px;"></div>
+      <div id="infrastructureList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px;"></div>
     </div>
   </div>
 
-  <!-- Line 410: TAB 6 - Weapon Ethics, Aggression & Defensive Sidearms -->
-  <div id="tab-ethics" class="tab-content">
-    <div class="panel">
-      <h2>Official Weapon Tiers & Defensive Sidearms</h2>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Tier</th>
-            <th>Species</th>
-            <th>Recommended Primary Firearm</th>
-            <th>Aggression Level</th>
-            <th>Recommended Defensive Sidearm</th>
-          </tr>
-        </thead>
-        <tbody id="ethicsTableBody"></tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Line 429: Visible 24-Hour New York Time Footer -->
   <footer>
     <span>Way of the Hunter 2 &bull; playstation-be936.web.app</span>
-    <span id="systemStamp">2026-10-05 21:38 EDT | Version: 2.4.0</span>
+    <span>2026-10-05 21:55 EDT | Version: 2.5.0</span>
   </footer>
 
-  <!-- Line 435: Firebase v9 Web Integration Script -->
+  <!-- Firebase Integration Script -->
   <script type="module">
     import { initializeApp } from "//www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "//www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
     import { getDatabase, ref, push, onValue } from "//www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-    // Line 441: Core Firebase Configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDeuNBGHcwU4rFyOcsfGxLHjmEdpADacmc",
       authDomain: "entertainment-71888.firebaseapp.com",
@@ -486,105 +448,26 @@
     const provider = new GoogleAuthProvider();
 
     let currentUser = null;
-    let activeRegionKey = "wetiko_foothills";
-    let activeSeason = "summer";
 
-    // Line 461: Complete Species, Tiers, Aggression, and Calibers Dataset
-    const SpeciesData = [
-      { name: "Mallard", tier: 1, regions: ["lake_sasquatch", "mishipeshu_swamp", "slalakum_shore", "thunderbird_muskeg", "wetiko_foothills"], ammo: "28ga / 12ga Birdshot / .22 LR", aggression: "Passive", defensive: "None needed" },
-      { name: "Snowshoe Hare", tier: 1, regions: ["jackalope_cordillera", "lake_sasquatch"], ammo: ".22 LR", aggression: "Passive", defensive: "None needed" },
-      { name: "White-tailed ptarmigan", tier: 1, regions: ["jackalope_cordillera", "lake_sasquatch"], ammo: ".22 LR / 28ga", aggression: "Passive", defensive: "None needed" },
-      { name: "Eastern wild turkey", tier: 2, regions: ["mishipeshu_swamp", "slalakum_shore", "thunderbird_muskeg", "wetiko_foothills"], ammo: "28ga Semi-Auto / .22 LR", aggression: "Passive", defensive: "None needed" },
-      { name: "American wolverine", tier: 3, regions: ["jackalope_cordillera", "kermode_plateau", "slalakum_shore"], ammo: ".243 Win / 6.5mm", aggression: "Defensive / Territorial", defensive: ".357 Magnum / 10mm Auto" },
-      { name: "Northwestern white-tailed deer", tier: 4, regions: ["lake_sasquatch", "kermode_plateau", "mishipeshu_swamp", "slalakum_shore", "wetiko_foothills"], ammo: "6.5mm Creedmoor / .30-06", aggression: "Passive", defensive: "None needed" },
-      { name: "Rocky Mountain pronghorn", tier: 4, regions: ["kermode_plateau", "slalakum_shore"], ammo: "6.5mm / .270", aggression: "Passive", defensive: "None needed" },
-      { name: "Northwestern wolf", tier: 4, regions: ["jackalope_cordillera", "kermode_plateau", "lake_sasquatch", "mishipeshu_swamp", "slalakum_shore", "thunderbird_muskeg", "wetiko_foothills"], ammo: "6.5mm / .30-06", aggression: "Predatory Pack", defensive: "10mm Auto / .357 Magnum" },
-      { name: "Central European boar", tier: 5, regions: ["lake_sasquatch", "mishipeshu_swamp", "slalakum_shore", "wetiko_foothills"], ammo: ".30-06 / .308 Win", aggression: "Aggressive Charge", defensive: ".44 Magnum / 10mm Auto" },
-      { name: "Dall sheep", tier: 5, regions: ["jackalope_cordillera", "lake_sasquatch", "kermode_plateau"], ammo: "6.5mm / .270 Win", aggression: "Passive", defensive: "None needed" },
-      { name: "Rocky Mountain mule deer", tier: 6, regions: ["jackalope_cordillera", "kermode_plateau", "slalakum_shore", "wetiko_foothills"], ammo: ".30-06 / .300 Win Mag", aggression: "Passive", defensive: "None needed" },
-      { name: "Grizzly bear", tier: 7, regions: ["jackalope_cordillera", "kermode_plateau", "lake_sasquatch"], ammo: ".300 Win Mag / .338 Lapua", aggression: "Apex Lethal Aggression", defensive: ".44 Magnum / .454 Casull" },
-      { name: "Rocky Mountain elk", tier: 7, regions: ["kermode_plateau", "slalakum_shore", "wetiko_foothills"], ammo: ".30-06 / .300 Win Mag", aggression: "Defensive Rut", defensive: ".44 Magnum" },
-      { name: "Western moose", tier: 8, regions: ["mishipeshu_swamp", "thunderbird_muskeg"], ammo: ".300 Win Mag / .338 Lapua", aggression: "Territorial Charge", defensive: ".44 Magnum / .454 Casull" },
-      { name: "Wood bison", tier: 8, regions: ["kermode_plateau", "slalakum_shore"], ammo: ".338 Lapua / .375 Mag", aggression: "Territorial Trample", defensive: ".454 Casull / .375 Rifle" }
+    // Game Datasets
+    const SpeciesRoster = [
+      { name: "Northwestern white-tailed deer", lifespanDays: 30, feed: "06:00 - 10:00", drink: "10:00 - 14:00", rest: "14:00 - 18:00", tip: "Cull 1-star matures. Lake Sasquatch cleanup unlocks 5-star ceiling." },
+      { name: "Rocky Mountain mule deer", lifespanDays: 33, feed: "07:00 - 11:00", drink: "11:00 - 15:00", rest: "15:00 - 19:00", tip: "Check sunny ridges in Wetiko. Large antlers reach full size around Day 30." },
+      { name: "Rocky Mountain elk", lifespanDays: 42, feed: "05:00 - 09:00", drink: "09:00 - 13:00", rest: "13:00 - 17:00", tip: "Bulls bed on Kermode Plateau edges. 5-stars appear after Year 12." },
+      { name: "Dall sheep", lifespanDays: 39, feed: "08:00 - 12:00", drink: "12:00 - 15:00", rest: "15:00 - 20:00", tip: "High Jackalope crags. Look for full curl horns in mature rams." },
+      { name: "Western moose", lifespanDays: 48, feed: "06:00 - 10:00", drink: "10:00 - 14:00", rest: "14:00 - 18:00", tip: "Thunderbird Muskeg peatlands. Beware of aggressive charging bulls." },
+      { name: "Wood bison", lifespanDays: 54, feed: "07:00 - 11:00", drink: "11:00 - 15:00", rest: "15:00 - 19:00", tip: "Slalakum shoreline. Will trample you if approached inside 50m." },
+      { name: "Grizzly bear", lifespanDays: 66, feed: "18:00 - 22:00", drink: "22:00 - 02:00", rest: "02:00 - 07:00", tip: "Ages slowly. Aggressive apex predator. Carry .44 Mag / .454 backup." },
+      { name: "Northwestern wolf", lifespanDays: 36, feed: "20:00 - 01:00", drink: "01:00 - 05:00", rest: "05:00 - 10:00", tip: "Active at night. Packs rotate large territories across multiple sectors." },
+      { name: "Rocky Mountain pronghorn", lifespanDays: 30, feed: "07:00 - 11:00", drink: "11:00 - 14:00", rest: "14:00 - 18:00", tip: "Open plains of Kermode. Extremely sharp eyesight; stalk from 250m+." },
+      { name: "Central European boar", lifespanDays: 33, feed: "19:00 - 23:00", drink: "23:00 - 03:00", rest: "03:00 - 08:00", tip: "Aggressive charges when startled. Look for wallows along swamp borders." },
+      { name: "American wolverine", lifespanDays: 24, feed: "05:00 - 09:00", drink: "09:00 - 12:00", rest: "12:00 - 17:00", tip: "Solitary scavenger. Moves quickly along timber edges." },
+      { name: "Eastern wild turkey", lifespanDays: 15, feed: "06:00 - 10:00", drink: "10:00 - 13:00", rest: "13:00 - 17:00", tip: "Spurs max out in Year 5. Use box caller from heavy brush." },
+      { name: "White-tailed ptarmigan", lifespanDays: 9, feed: "07:00 - 11:00", drink: "11:00 - 14:00", rest: "14:00 - 18:00", tip: "Shortest lifespan. Found on high rocks and scree slopes." },
+      { name: "Snowshoe Hare", lifespanDays: 12, feed: "18:00 - 22:00", drink: "22:00 - 01:00", rest: "01:00 - 06:00", tip: "Quiet stalking required. Uses .22 LR small game rimfire." },
+      { name: "Mallard", lifespanDays: 12, feed: "06:00 - 10:00", drink: "10:00 - 14:00", rest: "14:00 - 18:00", tip: "Flocks in lakes and marshes. Look for greenhead drakes." }
     ];
 
-    // Line 481: Lifecycles and Natural Mortality Dataset
-    const LifecyclesData = [
-      { species: "Mallard", years: 4, young: "Year 1", adult: "Year 2", mature: "Years 3-4", warning: "Fast turnover; despawns at Year 4 end (Day 12)." },
-      { species: "Snowshoe Hare", years: 4, young: "Year 1", adult: "Year 2", mature: "Years 3-4", warning: "Rapid death cycle; harvest before 12 in-game days." },
-      { species: "White-tailed ptarmigan", years: 3, young: "Year 1", adult: "Year 2", mature: "Year 3", warning: "Shortest lifecycle; dies of old age after 9 in-game days." },
-      { species: "Eastern wild turkey", years: 5, young: "Year 1", adult: "Years 2-3", mature: "Years 4-5", warning: "Spurs peak Year 5; despawns after 15 in-game days." },
-      { species: "American wolverine", years: 8, young: "Years 1-2", adult: "Years 3-5", mature: "Years 6-8", warning: "Solitary predator; natural mortality at Day 24." },
-      { species: "Northwestern white-tailed deer", years: 10, young: "Years 1-3", adult: "Years 4-6", mature: "Years 7-10", warning: "Trophy peaks Years 9-10; dies after 30 in-game days." },
-      { species: "Rocky Mountain pronghorn", years: 10, young: "Years 1-3", adult: "Years 4-6", mature: "Years 7-10", warning: "Bucks die at Year 10 end; cull low genetics in Adult stage." },
-      { species: "Northwestern wolf", years: 12, young: "Years 1-3", adult: "Years 4-7", mature: "Years 8-12", warning: "Alpha turnover occurs at 36 in-game days." },
-      { species: "Central European boar", years: 11, young: "Years 1-3", adult: "Years 4-7", mature: "Years 8-11", warning: "Tusks max out Year 11; natural death after 33 in-game days." },
-      { species: "Dall sheep", years: 13, young: "Years 1-4", adult: "Years 5-8", mature: "Years 9-13", warning: "Full curl horns develop Year 11; dies after Day 39." },
-      { species: "Rocky Mountain mule deer", years: 11, young: "Years 1-3", adult: "Years 4-6", mature: "Years 7-11", warning: "Peak trophy physique at Year 10-11; dies at Day 33." },
-      { species: "Grizzly bear", years: 22, young: "Years 1-5", adult: "Years 6-14", mature: "Years 15-22", warning: "Longest lifespan (66 days); culling mistakes take long to fix." },
-      { species: "Rocky Mountain elk", years: 14, young: "Years 1-4", adult: "Years 5-9", mature: "Years 10-14", warning: "Max 5-star antlers Year 13-14; dies after 42 in-game days." },
-      { species: "Western moose", years: 16, young: "Years 1-4", adult: "Years 5-10", mature: "Years 11-16", warning: "Paddle weight peaks late Mature; despawns at Day 48." },
-      { species: "Wood bison", years: 18, young: "Years 1-5", adult: "Years 6-12", mature: "Years 13-18", warning: "Heavy horn bases require full maturity; dies after Day 54." }
-    ];
-
-    // Line 501: Seasonal Trails & Habitat Corridors
-    const TrailsData = {
-      wetiko_foothills: {
-        summer: "Northern alpine ridge transitions and open sunlit hillsides.",
-        winter: "Sheltered pine creek basins with thermal brush bedding.",
-        grazing: "Wide grassland clearings along lake drainages between 07:00 and 11:00.",
-        hazards: "None (Mule deer & elk territory). Watch for occasional wandering wolves."
-      },
-      slalakum_shore: {
-        summer: "Breeze-cooled coastal sedge terraces and shoreline delta crossings.",
-        winter: "Deep windbreak timber corridors sheltered from storm winds.",
-        grazing: "Broad coastal grass flats where bison herds meander in lines.",
-        hazards: "Wood Bison charge risk within 50m. Wolves prowling southern shoreline."
-      },
-      thunderbird_muskeg: {
-        summer: "Shallow muskeg lake margins and birch flat feeding zones.",
-        winter: "Dense spruce island hammocks offering wind deflection.",
-        grazing: "Swamp willow thickets and riparian grass corridors.",
-        hazards: "Aggressive sick Western Moose in dense peat swamps. Carry .44 Magnum."
-      },
-      jackalope_cordillera: {
-        summer: "Exposed mountain saddles and open scree fields.",
-        winter: "Lower cliff faces where wind scours away snow cover.",
-        grazing: "Alpine tundra shelves with escape rock within 50 meters.",
-        hazards: "Apex Grizzly Bear lethal charge hazard in subalpine valleys."
-      },
-      kermode_plateau: {
-        summer: "High elevation rolling plateaus and open summit meadows.",
-        winter: "South-facing lower plateau benches.",
-        grazing: "Wide rolling plateau meadows; elk spread out 100+ meters.",
-        hazards: "Grizzly bears & aggressive Wood Bison herds roaming plateau rim."
-      },
-      lake_sasquatch: {
-        summer: "Lakeshore wetlands and water transition trails.",
-        winter: "Dense hemlock and spruce canopies for snow cover.",
-        grazing: "Open grassy flats between eastern cabins and lakeshore.",
-        hazards: "Grizzly bears along northeastern shoreline. Boars in brush."
-      },
-      mishipeshu_swamp: {
-        summer: "Waterway channels and open marsh flats.",
-        winter: "Hardwood timber stands on swamp border ridges.",
-        grazing: "Reedy marsh corridors and shallow water feeding basins.",
-        hazards: "Wild boars & territorial Western Moose cornered in deep water."
-      }
-    };
-
-    // Line 545: Regional Stewardship
-    const StewardshipData = [
-      { region: "Wetiko Foothills", status: "Healthy (74% Avg)", quota: "1 Low-Fitness Mature Cull", tip: "Mikael Anderson's territory. High-ranking Mule deer herds." },
-      { region: "Slalakum Shore", status: "Stable (65% Avg)", quota: "2 Culls Required", tip: "Juniper's dog training hub. Feeder installation required for bison boost." },
-      { region: "Thunderbird Muskeg", status: "Vulnerable (58% Avg)", quota: "3 Culls & Weed Cleanse", tip: "Regina Harper's watch. Remove 3 invasive plant patches." },
-      { region: "Jackalope Cordillera", status: "Stable (68% Avg)", quota: "1 Dall Sheep Cull", tip: "Patrick Harper's outpost. Clear blocked pass for truck route." },
-      { region: "Kermode Plateau", status: "Thriving (82% Avg)", quota: "Protect 5-Star Breeders", tip: "Elite Elk territory. 5-star bulls actively roaming plateau." },
-      { region: "Lake Sasquatch", status: "Critical (48% Avg)", quota: "Urgent Pollution Removal", tip: "Water is toxic. White-tailed deer ceiling blocked until lake is cleaned." },
-      { region: "Mishipeshu Swamp", status: "Vulnerable (54% Avg)", quota: "Cull Sick Moose (0/3)", tip: "Moose population suffering from disease. Regina requires intervention." }
-    ];
-
-    // Line 557: 33 Campaign Missions
     const MissionsData = [
       { name: "For the Hearth", source: "Angel", reward: "Story Progress", desc: "Harvest a male Mule deer near Lodge. Taxidermy it." },
       { name: "For the Hunt", source: "Angel", reward: "Story Progress", desc: "Place Mule deer in lodge diorama with mid-sized herbivore." },
@@ -621,7 +504,6 @@
       { name: "Artificial route", source: "Slalakum Shore", reward: "$1,800 | 100 XP", desc: "Harvest 70%+ Pronghorn heart shot from 200m+." }
     ];
 
-    // Line 595: 32 Infrastructure Tasks
     const InfrastructureData = [
       { name: "Lake Sasquatch Pollution Cleanse", cost: "$5,670", impact: "High", desc: "Clears toxic water so Whitetail deer can reach Thriving." },
       { name: "Thunderbird Muskeg Weed Cleanse (3 Sites)", cost: "$3,015 ea", impact: "High", desc: "Removes invasive plant species affecting turkeys/mallards." },
@@ -635,9 +517,8 @@
       { name: "Kermode Plateau Highland Stands (2)", cost: "$3,030 - $3,735", impact: "Advantage", desc: "Constructs 360-degree glassing positions." }
     ];
 
-    // Line 610: DOMContentLoaded Initialization & Gatekeepers
     document.addEventListener("DOMContentLoaded", () => {
-      // Tab Switching
+      // Tab System
       const tabs = document.querySelectorAll(".nav-tab");
       tabs.forEach(tab => {
         tab.addEventListener("click", () => {
@@ -648,24 +529,73 @@
         });
       });
 
-      // Element References
+      // Populate Select Dropdowns
+      const harvestSpecies = document.getElementById("harvestSpecies");
+      const watchSpecies = document.getElementById("watchSpecies");
+      SpeciesRoster.forEach(s => {
+        const opt1 = document.createElement("option");
+        opt1.value = s.name;
+        opt1.textContent = s.name;
+        harvestSpecies.appendChild(opt1);
+
+        const opt2 = document.createElement("option");
+        opt2.value = s.name;
+        opt2.textContent = s.name;
+        watchSpecies.appendChild(opt2);
+      });
+
+      // Populate Need Zones Table
+      const zonesBody = document.getElementById("zonesTableBody");
+      SpeciesRoster.forEach(s => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${s.name}</strong></td>
+          <td><span style="color:var(--accent-green); font-weight:600;">${s.feed}</span></td>
+          <td><span style="color:var(--accent-blue); font-weight:600;">${s.drink}</span></td>
+          <td><span style="color:var(--accent-purple); font-weight:600;">${s.rest}</span></td>
+          <td style="font-size:0.8rem; color:var(--text-dim);">${s.tip}</td>
+        `;
+        zonesBody.appendChild(tr);
+      });
+
+      // Populate Missions
+      const missionsList = document.getElementById("missionsList");
+      MissionsData.forEach(m => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong>${m.name}</strong>
+            <span style="color:var(--accent-gold); font-size:0.75rem;">${m.reward}</span>
+          </div>
+          <span style="color:var(--accent-blue); font-size:0.8rem;">Contact: ${m.source}</span>
+          <p style="color:var(--text-dim); font-size:0.8rem;">${m.desc}</p>
+        `;
+        missionsList.appendChild(card);
+      });
+
+      // Populate Infrastructure
+      const infraList = document.getElementById("infrastructureList");
+      InfrastructureData.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong>${item.name}</strong>
+            <span style="color:var(--accent-green); font-size:0.8rem; font-weight:700;">${item.cost}</span>
+          </div>
+          <span style="color:${item.impact === 'High' ? 'var(--accent-red)' : 'var(--text-dim)'}; font-size:0.75rem;">Impact: ${item.impact}</span>
+          <p style="color:var(--text-dim); font-size:0.8rem;">${item.desc}</p>
+        `;
+        infraList.appendChild(card);
+      });
+
+      // Auth Observer
       const btnLogin = document.getElementById("btnLogin");
       const btnLogout = document.getElementById("btnLogout");
       const userProfile = document.getElementById("userProfile");
       const hunterTagText = document.getElementById("hunterTagText");
 
-      const regionSelect = document.getElementById("regionSelect");
-      const seasonSelect = document.getElementById("seasonSelect");
-      const trailDetailText = document.getElementById("trailDetailText");
-      const grazingDetailText = document.getElementById("grazingDetailText");
-      const hazardAlertText = document.getElementById("hazardAlertText");
-      const pinSpecies = document.getElementById("pinSpecies");
-      const markerForm = document.getElementById("markerForm");
-      const liveMarkersFeed = document.getElementById("liveMarkersFeed");
-      const btnCheckFitness = document.getElementById("btnCheckFitness");
-      const fitnessResult = document.getElementById("fitnessResult");
-
-      // Line 640: Auth Observer
       onAuthStateChanged(auth, (user) => {
         currentUser = user;
         if (user) {
@@ -677,258 +607,268 @@
           userProfile.style.display = "none";
           hunterTagText.textContent = "Guest";
         }
-        bindRegionalPins(activeRegionKey);
+        bindHarvests();
+        bindWatchlist();
       });
 
       if (btnLogin) btnLogin.addEventListener("click", () => signInWithPopup(auth, provider));
       if (btnLogout) btnLogout.addEventListener("click", () => signOut(auth));
 
-      // Line 658: Update Regional Corridors & Hazards
-      function updateTrailsAndSpecies() {
-        const regionalTrails = TrailsData[activeRegionKey] || { summer: "N/A", winter: "N/A", grazing: "N/A", hazards: "None" };
-        trailDetailText.textContent = activeSeason === "summer" ? regionalTrails.summer : regionalTrails.winter;
-        grazingDetailText.textContent = regionalTrails.grazing;
-        hazardAlertText.textContent = regionalTrails.hazards;
-
-        pinSpecies.innerHTML = "";
-        const available = SpeciesData.filter(s => s.regions.includes(activeRegionKey));
-        available.forEach(s => {
-          const opt = document.createElement("option");
-          opt.value = s.name;
-          opt.textContent = `${s.name} (Tier ${s.tier}) - ${s.aggression}`;
-          pinSpecies.appendChild(opt);
+      // In-Game Day and Clock Change
+      const currentDayInput = document.getElementById("currentInGameDay");
+      if (currentDayInput) {
+        currentDayInput.addEventListener("change", () => {
+          bindWatchlist();
         });
       }
 
-      if (regionSelect) {
-        regionSelect.addEventListener("change", (e) => {
-          activeRegionKey = e.target.value;
-          updateTrailsAndSpecies();
-          bindRegionalPins(activeRegionKey);
-        });
-      }
-
-      if (seasonSelect) {
-        seasonSelect.addEventListener("change", (e) => {
-          activeSeason = e.target.value;
-          updateTrailsAndSpecies();
-        });
-      }
-
-      // Line 690: Marker Submission with Write Protection
-      if (markerForm) {
-        markerForm.addEventListener("submit", async (e) => {
+      // Record Harvest Submit
+      const harvestForm = document.getElementById("harvestForm");
+      if (harvestForm) {
+        harvestForm.addEventListener("submit", async (e) => {
           e.preventDefault();
-          const species = pinSpecies.value;
-          const category = document.getElementById("pinCategory").value;
-          const stage = document.getElementById("pinStage").value;
-          const fitness = document.getElementById("pinFitness").value || "N/A";
-          const blood = document.getElementById("pinBlood").value;
-          const hoof = document.getElementById("pinHoofDirection").value;
-          const location = document.getElementById("pinLocation").value;
+          const day = parseInt(document.getElementById("currentInGameDay").value, 10) || 1;
+          const time = document.getElementById("currentInGameTime").value;
+          const species = document.getElementById("harvestSpecies").value;
+          const region = document.getElementById("harvestRegion").value;
+          const distance = document.getElementById("harvestDistance").value;
+          const organ = document.getElementById("harvestOrgan").value;
+          const trophy = document.getElementById("harvestTrophy").value;
+          const huntRating = document.getElementById("harvestHuntRating").value;
+          const weapon = document.getElementById("harvestWeapon").value;
+          const fitness = document.getElementById("harvestFitness").value || "N/A";
 
           const hunterName = currentUser ? (currentUser.displayName || "Hunter") : "Local Guest";
           const uid = currentUser ? currentUser.uid : "guest";
 
-          const pinPayload = {
+          const payload = {
             hunter: hunterName,
+            day,
+            time,
             species,
-            category,
-            stage,
+            region,
+            distance: `${distance} yds`,
+            organ,
+            trophy,
+            huntRating,
+            weapon,
             fitness,
-            blood,
-            hoof,
-            location,
-            season: activeSeason,
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
           };
 
           if (currentUser) {
             try {
-              const pinsRef = ref(db, `woth2_users/${uid}/markers/${activeRegionKey}`);
-              await push(pinsRef, pinPayload);
+              const harvestRef = ref(db, `woth2_users/${uid}/harvests`);
+              await push(harvestRef, payload);
             } catch (err) {
               console.warn("RTDB write prevented, using local fallback", err);
-              saveLocalFallback(activeRegionKey, pinPayload);
+              saveLocalHarvest(payload);
             }
           } else {
-            saveLocalFallback(activeRegionKey, pinPayload);
+            saveLocalHarvest(payload);
           }
 
-          document.getElementById("pinLocation").value = "";
-          document.getElementById("pinFitness").value = "";
+          document.getElementById("harvestDistance").value = "";
+          document.getElementById("harvestWeapon").value = "";
+          document.getElementById("harvestFitness").value = "";
         });
       }
 
-      // Line 735: Fitness Evaluation Engine
-      if (btnCheckFitness) {
-        btnCheckFitness.addEventListener("click", () => {
-          const val = parseFloat(document.getElementById("testFitnessVal").value);
-          if (isNaN(val)) return;
+      // Record Watchlist Submit
+      const watchlistForm = document.getElementById("watchlistForm");
+      if (watchlistForm) {
+        watchlistForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const daySighted = parseInt(document.getElementById("currentInGameDay").value, 10) || 1;
+          const name = document.getElementById("watchName").value;
+          const species = document.getElementById("watchSpecies").value;
+          const region = document.getElementById("watchRegion").value;
+          const stage = document.getElementById("watchStage").value;
+          const fitness = parseFloat(document.getElementById("watchFitness").value);
+          const location = document.getElementById("watchLocation").value;
 
-          if (val < 55.0) {
-            fitnessResult.textContent = `${val.toFixed(1)}%: CULL IMMEDIATELY. Inferior genetics. Remove before generation roll so genetics do not factor into replacement fawns.`;
-            fitnessResult.style.color = "var(--accent-red)";
-          } else if (val >= 55.0 && val < 70.0) {
-            fitnessResult.textContent = `${val.toFixed(1)}%: AVERAGE. Monitor adult antler progression; cull if star rating stalls.`;
-            fitnessResult.style.color = "var(--accent-gold)";
+          const matchedSpecies = SpeciesRoster.find(s => s.name === species);
+          const lifespanDays = matchedSpecies ? matchedSpecies.lifespanDays : 30;
+
+          const uid = currentUser ? currentUser.uid : "guest";
+
+          const payload = {
+            name,
+            species,
+            region,
+            stage,
+            fitness,
+            location,
+            daySighted,
+            lifespanDays,
+            deathDay: daySighted + lifespanDays
+          };
+
+          if (currentUser) {
+            try {
+              const watchRef = ref(db, `woth2_users/${uid}/watchlist`);
+              await push(watchRef, payload);
+            } catch (err) {
+              console.warn("RTDB write prevented, using local fallback", err);
+              saveLocalWatchlist(payload);
+            }
           } else {
-            fitnessResult.textContent = `${val.toFixed(1)}%: TROPHY BREEDER. Protect through adult stage; harvest in late mature window before natural death despawn!`;
-            fitnessResult.style.color = "var(--accent-green)";
+            saveLocalWatchlist(payload);
           }
+
+          document.getElementById("watchName").value = "";
+          document.getElementById("watchFitness").value = "";
+          document.getElementById("watchLocation").value = "";
         });
       }
 
-      // Line 755: Regional Pins Sync Gatekeeper
-      function bindRegionalPins(regionKey) {
-        const storageKey = `woth2_cache_${currentUser ? currentUser.uid : "guest"}_${regionKey}`;
+      // Live Harvest Renderer with Gatekeeper
+      function bindHarvests() {
+        const harvestList = document.getElementById("harvestList");
+        const storageKey = `woth2_harvests_${currentUser ? currentUser.uid : "guest"}`;
 
         if (!currentUser) {
-          const localData = JSON.parse(localStorage.getItem(storageKey) || "[]");
-          renderPins(localData);
+          const cached = JSON.parse(localStorage.getItem(storageKey) || "[]");
+          renderHarvests(cached);
           return;
         }
 
-        const pinsRef = ref(db, `woth2_users/${currentUser.uid}/markers/${regionKey}`);
-        onValue(pinsRef, (snapshot) => {
+        const harvestRef = ref(db, `woth2_users/${currentUser.uid}/harvests`);
+        onValue(harvestRef, (snapshot) => {
           if (snapshot.exists() && snapshot.val() !== null) {
             const data = Object.values(snapshot.val());
             localStorage.setItem(storageKey, JSON.stringify(data));
-            renderPins(data);
+            renderHarvests(data);
           } else {
-            console.warn("RTDB node empty or null, reading existing localStorage state.");
             const cached = JSON.parse(localStorage.getItem(storageKey) || "[]");
-            renderPins(cached);
+            renderHarvests(cached);
           }
         }, (err) => {
-          console.warn("RTDB connection error, maintaining local state:", err);
+          console.warn("RTDB fetch failed, reading localStorage:", err);
           const cached = JSON.parse(localStorage.getItem(storageKey) || "[]");
-          renderPins(cached);
+          renderHarvests(cached);
         });
       }
 
-      // Line 783: Pin Card Renderer
-      function renderPins(pins) {
-        liveMarkersFeed.innerHTML = "";
-        if (!pins.length) {
-          liveMarkersFeed.innerHTML = `<p style="font-size:0.85rem; color:var(--text-dim);">No pins recorded in this region yet.</p>`;
+      function renderHarvests(data) {
+        const harvestList = document.getElementById("harvestList");
+        harvestList.innerHTML = "";
+        if (!data.length) {
+          harvestList.innerHTML = `<p style="font-size:0.85rem; color:var(--text-dim);">No harvests logged yet. Use the form to log your first kill!</p>`;
           return;
         }
 
-        pins.slice(-6).reverse().forEach(pin => {
+        data.slice(-10).reverse().forEach(h => {
           const card = document.createElement("div");
-          card.className = "pin-card";
-
-          let tagClass = "tag-zone";
-          if (pin.category === "mature") tagClass = "tag-mature";
-          if (pin.category === "cull") tagClass = "tag-cull";
-          if (pin.category === "blood") tagClass = "tag-blood";
-          if (pin.category === "danger") tagClass = "tag-danger";
-          if (pin.category === "trail" || pin.category === "grazing") tagClass = "tag-trail";
-
+          card.className = "card";
           card.innerHTML = `
             <div style="display:flex; justify-content:space-between; align-items:center;">
-              <strong>${pin.species}</strong>
-              <span class="pin-tag ${tagClass}">${pin.category.toUpperCase()}</span>
+              <strong>${h.species} &bull; ${h.region}</strong>
+              <span class="tag-badge" style="background:var(--accent-gold); color:#000;">${h.trophy}</span>
             </div>
-            <p style="font-size:0.85rem; color:var(--text-dim);">${pin.location} &bull; Stage: ${pin.stage} &bull; Fitness: ${pin.fitness}</p>
-            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#94a3b8;">
-              <span>Hoof Trail: ${pin.hoof} (${pin.season})</span>
-              <span>By ${pin.hunter} at ${pin.timestamp}</span>
+            <p style="font-size:0.85rem; color:var(--text-dim); margin-top:4px;">
+              <strong>Shot:</strong> ${h.distance} with ${h.weapon} | <strong>Hit:</strong> ${h.organ}
+            </p>
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:#94a3b8; margin-top:4px;">
+              <span>Hunt Ethics: ${h.huntRating}</span>
+              <span>In-Game: Day ${h.day} at ${h.time} (Logged by ${h.hunter})</span>
             </div>
           `;
-          liveMarkersFeed.appendChild(card);
+          harvestList.appendChild(card);
         });
       }
 
-      // Line 817: LocalStorage Fallback Handler
-      function saveLocalFallback(regionKey, payload) {
-        const key = `woth2_cache_${currentUser ? currentUser.uid : "guest"}_${regionKey}`;
-        const existing = JSON.parse(localStorage.getItem(key) || "[]");
-        existing.push(payload);
-        localStorage.setItem(key, JSON.stringify(existing));
-        renderPins(existing);
+      // Live Watchlist Renderer with Dynamic Day Countdown
+      function bindWatchlist() {
+        const feed = document.getElementById("watchlistFeed");
+        const storageKey = `woth2_watchlist_${currentUser ? currentUser.uid : "guest"}`;
+
+        if (!currentUser) {
+          const cached = JSON.parse(localStorage.getItem(storageKey) || "[]");
+          renderWatchlist(cached);
+          return;
+        }
+
+        const watchRef = ref(db, `woth2_users/${currentUser.uid}/watchlist`);
+        onValue(watchRef, (snapshot) => {
+          if (snapshot.exists() && snapshot.val() !== null) {
+            const data = Object.values(snapshot.val());
+            localStorage.setItem(storageKey, JSON.stringify(data));
+            renderWatchlist(data);
+          } else {
+            const cached = JSON.parse(localStorage.getItem(storageKey) || "[]");
+            renderWatchlist(cached);
+          }
+        }, (err) => {
+          console.warn("RTDB fetch failed, reading localStorage:", err);
+          const cached = JSON.parse(localStorage.getItem(storageKey) || "[]");
+          renderWatchlist(cached);
+        });
       }
 
-      // Line 826: Populate Lifecycles Table
-      const lifecycleBody = document.getElementById("lifecycleTableBody");
-      LifecyclesData.forEach(l => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td><strong>${l.species}</strong></td>
-          <td>${l.years} yrs (${l.years * 3} days)</td>
-          <td>${l.young}</td>
-          <td>${l.adult}</td>
-          <td><strong style="color:var(--accent-gold);">${l.mature}</strong></td>
-          <td style="font-size:0.8rem; color:var(--text-dim);">${l.warning}</td>
-        `;
-        lifecycleBody.appendChild(row);
-      });
+      function renderWatchlist(data) {
+        const feed = document.getElementById("watchlistFeed");
+        feed.innerHTML = "";
+        const currentDay = parseInt(document.getElementById("currentInGameDay").value, 10) || 1;
 
-      // Line 840: Populate Stewardship Grid
-      const stewardshipContainer = document.getElementById("stewardshipGrid");
-      StewardshipData.forEach(s => {
-        const card = document.createElement("div");
-        card.className = "list-card";
-        card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <strong>${s.region}</strong>
-            <span style="font-size:0.75rem; color:var(--accent-green); font-weight:700;">${s.status}</span>
-          </div>
-          <span style="font-size:0.8rem; color:var(--accent-gold); font-weight:600;">Quota: ${s.quota}</span>
-          <p style="font-size:0.8rem; color:var(--text-dim);">${s.tip}</p>
-        `;
-        stewardshipContainer.appendChild(card);
-      });
+        if (!data.length) {
+          feed.innerHTML = `<p style="font-size:0.85rem; color:var(--text-dim);">No targets being tracked. Add one on the left!</p>`;
+          return;
+        }
 
-      // Line 855: Populate Missions Cards
-      const missionsContainer = document.getElementById("missionsList");
-      MissionsData.forEach(m => {
-        const card = document.createElement("div");
-        card.className = "list-card";
-        card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-            <strong>${m.name}</strong>
-            <span style="font-size:0.75rem; color:var(--accent-gold);">${m.reward}</span>
-          </div>
-          <span style="font-size:0.8rem; color:var(--accent-blue); font-weight:600;">Contact: ${m.source}</span>
-          <p style="font-size:0.8rem; color:var(--text-dim);">${m.desc}</p>
-        `;
-        missionsContainer.appendChild(card);
-      });
+        data.forEach(t => {
+          const card = document.createElement("div");
+          card.className = "card";
 
-      // Line 870: Populate Infrastructure Cards
-      const infraContainer = document.getElementById("infrastructureList");
-      InfrastructureData.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "list-card";
-        card.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <strong>${item.name}</strong>
-            <span style="font-size:0.8rem; color:var(--accent-green); font-weight:700;">${item.cost}</span>
-          </div>
-          <span style="font-size:0.75rem; color:${item.impact === 'High' ? 'var(--accent-red)' : 'var(--text-dim)'}; font-weight:600;">Impact: ${item.impact}</span>
-          <p style="font-size:0.8rem; color:var(--text-dim);">${item.desc}</p>
-        `;
-        infraContainer.appendChild(card);
-      });
+          const daysPassed = currentDay - t.daySighted;
+          const daysRemaining = t.deathDay - currentDay;
 
-      // Line 885: Populate Ethics & Aggressive Defense Table
-      const tableBody = document.getElementById("ethicsTableBody");
-      SpeciesData.forEach(s => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td><strong>Tier ${s.tier}</strong></td>
-          <td>${s.name}</td>
-          <td><strong>${s.ammo}</strong></td>
-          <td><span style="color:${s.aggression.includes('Aggression') || s.aggression.includes('Charge') ? 'var(--accent-red)' : 'var(--text-main)'}; font-weight:600;">${s.aggression}</span></td>
-          <td><strong style="color:var(--accent-purple);">${s.defensive}</strong></td>
-        `;
-        tableBody.appendChild(row);
-      });
+          let urgencyColor = "var(--accent-green)";
+          let statusAdvice = "Growing in the wild. Check back next generation.";
 
-      // Initial region selection trigger
-      updateTrailsAndSpecies();
+          if (t.fitness < 55.0) {
+            urgencyColor = "var(--accent-red)";
+            statusAdvice = "CULL TARGET: Inferior genetics! Harvest now to clear herd gene pool.";
+          } else if (daysRemaining <= 3) {
+            urgencyColor = "var(--accent-red)";
+            statusAdvice = "⚠️ CRITICAL TROPHY WINDOW: Will die of old age and despawn within 1 in-game year! Harvest now!";
+          } else if (t.fitness >= 85.0) {
+            urgencyColor = "var(--accent-gold)";
+            statusAdvice = "⭐ 5-STAR BREEDER: Keep alive to seed future fawns until mature late stage.";
+          }
+
+          card.innerHTML = `
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong style="color:var(--accent-gold); font-size:1rem;">${t.name} (${t.species})</strong>
+              <span class="tag-badge" style="background:${urgencyColor}; color:#000;">${daysRemaining > 0 ? daysRemaining + ' Days Left' : 'DESPAWNED / DEAD'}</span>
+            </div>
+            <p style="font-size:0.85rem; color:var(--text-dim); margin-top:2px;">
+              <strong>Sector:</strong> ${t.region} (${t.location}) &bull; <strong>Fitness:</strong> ${t.fitness}% &bull; <strong>Stage:</strong> ${t.stage}
+            </p>
+            <div style="background:#070d18; padding:8px; border-radius:4px; margin-top:6px; font-size:0.8rem; border-left:3px solid ${urgencyColor};">
+              <strong style="color:${urgencyColor};">Action:</strong> ${statusAdvice}
+            </div>
+            <span style="font-size:0.75rem; color:#64748b; margin-top:4px;">First sighted on In-Game Day ${t.daySighted} &bull; Current Day: ${currentDay}</span>
+          `;
+          feed.appendChild(card);
+        });
+      }
+
+      function saveLocalHarvest(payload) {
+        const storageKey = `woth2_harvests_${currentUser ? currentUser.uid : "guest"}`;
+        const existing = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        existing.push(payload);
+        localStorage.setItem(storageKey, JSON.stringify(existing));
+        renderHarvests(existing);
+      }
+
+      function saveLocalWatchlist(payload) {
+        const storageKey = `woth2_watchlist_${currentUser ? currentUser.uid : "guest"}`;
+        const existing = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        existing.push(payload);
+        localStorage.setItem(storageKey, JSON.stringify(existing));
+        renderWatchlist(existing);
+      }
     });
   </script>
 </body>
