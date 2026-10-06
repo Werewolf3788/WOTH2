@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<!-- Line 1: PlayStation Portal - Way of the Hunter 2 Official Inspection Companion -->
-<!-- Stamped: 2026-10-06 00:45 EDT | Firebase Sync Target: /utm_links | Version: 2.8.0 -->
+<!-- Line 1: PlayStation Portal - Way of the Hunter 2 Comprehensive Field Companion -->
+<!-- Stamped: 2026-10-06 03:42 EDT | Firebase Sync Target: /utm_links | Version: 3.0.0 -->
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PlayStation Hub &bull; Way of the Hunter 2 Field Tracker</title>
+  <title>PlayStation Hub &bull; Way of the Hunter 2 Companion</title>
   
   <link rel="icon" type="image/jpeg" href="//playstation-be936.web.app/favicon.ico" />
   <link rel="apple-touch-icon" href="//playstation-be936.web.app/favicon.ico" />
@@ -46,7 +46,7 @@
     .tab-content { display: none; padding: 16px; }
     .tab-content.active { display: block; }
 
-    .main-grid { display: grid; grid-template-columns: 500px 1fr; gap: 16px; }
+    .main-grid { display: grid; grid-template-columns: 520px 1fr; gap: 16px; }
     @media (max-width: 1100px) { .main-grid { grid-template-columns: 1fr; } }
     
     .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
@@ -70,11 +70,16 @@
     .stat-counter { display: flex; align-items: center; justify-content: space-between; background: #070d18; border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; }
     .counter-btn { width: 32px; height: 32px; min-height: 32px; padding: 0; background: var(--card); color: #fff; border: 1px solid var(--border); border-radius: 4px; font-weight: 800; cursor: pointer; }
 
+    .cluster-box { background: #070d18; border: 1px solid var(--border); border-radius: 6px; padding: 10px; margin-bottom: 8px; }
+    .zone-item { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px dashed var(--border); font-size: 0.85rem; }
+    .zone-item:last-child { border-bottom: none; }
+
     footer { background: var(--panel); border-top: 1px solid var(--border); padding: 10px 16px; font-size: 0.75rem; color: var(--dim); display: flex; justify-content: space-between; margin-top: 20px; }
   </style>
 </head>
 <body>
 
+  <!-- Line 75: Main Header & Database Link -->
   <header>
     <div class="brand">
       <a href="/">&larr; PlayStation Hub</a>
@@ -85,7 +90,7 @@
     </div>
   </header>
 
-  <!-- Cross-Device Game Mode & Clock Sync Bar -->
+  <!-- Line 85: Cross-Device Game Mode & Clock Sync Bar -->
   <div class="sync-bar">
     <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
       <div class="mode-toggle">
@@ -104,16 +109,19 @@
     <span id="activeModeDisplay" style="font-size:0.8rem; color:var(--green);">● Live: Single Player Cloud Branch</span>
   </div>
 
+  <!-- Line 104: Main Tab Navigation Bar -->
   <nav class="tab-bar">
-    <button class="nav-tab active" data-tab="tab-harvest">Full Harvest Inspection</button>
+    <button class="nav-tab active" data-tab="tab-harvest">Harvest Inspection</button>
     <button class="nav-tab" data-tab="tab-watchlist">Target Watchlist & Age (X/Y)</button>
+    <button class="nav-tab" data-tab="tab-needzones">Need Zone Clusters (~50yd)</button>
+    <button class="nav-tab" data-tab="tab-lifecycles">Life Cycles & Mortality</button>
     <button class="nav-tab" data-tab="tab-k9">Dog Companion Profile</button>
     <button class="nav-tab" data-tab="tab-challenges">Challenges & Perks</button>
     <button class="nav-tab" data-tab="tab-missions">Missions</button>
     <button class="nav-tab" data-tab="tab-infrastructure">Infrastructure</button>
   </nav>
 
-  <!-- TAB 1: Harvest Inspection Screen (Overview, Weight/Price, Trophy Score) -->
+  <!-- Line 117: TAB 1: Dynamic Harvest Inspection Screen -->
   <div id="tab-harvest" class="tab-content active">
     <div class="main-grid">
       
@@ -196,7 +204,7 @@
             </div>
             <div class="form-group">
               <label>Weather</label>
-              <input type="text" id="harvestWeather" placeholder="e.g. Clear or Heavy Rain" />
+              <input type="text" id="harvestWeather" placeholder="e.g. Clear or Rain" />
             </div>
           </div>
 
@@ -234,9 +242,9 @@
             </div>
           </div>
 
-          <!-- Section 3: Trophy & Antler Scoring -->
+          <!-- Section 3: Dynamic Trophy Scoring Injected from JSON -->
           <div style="border-left: 3px solid var(--purple); padding-left: 8px; margin-top: 8px; margin-bottom: 4px;">
-            <strong style="font-size:0.85rem; color:var(--purple);">3. Trophy Score & Rarity</strong>
+            <strong style="font-size:0.85rem; color:var(--purple);">3. Trophy Score & Schema (<span id="schemaCategoryLabel">Antlers</span>)</strong>
           </div>
           <div class="grid-4">
             <div class="form-group">
@@ -249,7 +257,7 @@
             </div>
             <div class="form-group">
               <label>Coat Rarity</label>
-              <input type="text" id="harvestCoat" placeholder="e.g. Common or Albino" />
+              <input type="text" id="harvestCoat" placeholder="e.g. Common / Albino" />
             </div>
             <div class="form-group">
               <label>Weight Rarity</label>
@@ -257,24 +265,8 @@
             </div>
           </div>
 
-          <div class="grid-4">
-            <div class="form-group">
-              <label>Main Beam</label>
-              <input type="text" id="harvestBeam" placeholder="e.g. 24.2 in" />
-            </div>
-            <div class="form-group">
-              <label>Inside Spread</label>
-              <input type="text" id="harvestInsideSpread" placeholder="e.g. 18.5 in" />
-            </div>
-            <div class="form-group">
-              <label>Base Circumf.</label>
-              <input type="text" id="harvestBaseCirc" placeholder="e.g. 4.8 in" />
-            </div>
-            <div class="form-group">
-              <label>Typical Points</label>
-              <input type="text" id="harvestPoints" placeholder="e.g. 10 Pts" />
-            </div>
-          </div>
+          <!-- Dynamic Trophy Fields Container -->
+          <div id="dynamicTrophyContainer" class="grid-3" style="margin-top:4px;"></div>
 
           <div class="grid-3">
             <div class="form-group">
@@ -307,7 +299,7 @@
         </form>
       </section>
 
-      <!-- Recorded Harvests Live Inspection Feed -->
+      <!-- Inspection History Feed -->
       <section class="panel">
         <h2>Inspection History (<span id="feedModeLabel">Single Player</span>)</h2>
         <div id="harvestFeed" style="display:flex; flex-direction:column; gap:10px; max-height:850px; overflow-y:auto;"></div>
@@ -315,7 +307,7 @@
     </div>
   </div>
 
-  <!-- TAB 2: Live Watchlist with X/Y Lifespan Age Counter -->
+  <!-- Line 305: TAB 2: Watchlist & Dynamic Lifespan Age Counter (X/Y) -->
   <div id="tab-watchlist" class="tab-content">
     <div class="main-grid">
       <section class="panel">
@@ -337,10 +329,10 @@
             </div>
           </div>
 
-          <!-- Dynamic Age Tracker (X/Y) -->
+          <!-- Age Input (X/Y) -->
           <div class="grid-2">
             <div class="form-group">
-              <label>Observed Age (Years)</label>
+              <label>Current Age (Years)</label>
               <input type="number" id="watchCurrentAge" placeholder="e.g. 3 (for 3/12)" required />
             </div>
             <div class="form-group">
@@ -364,7 +356,26 @@
     </div>
   </div>
 
-  <!-- TAB 3: Dog Companion Profile -->
+  <!-- Line 356: TAB 3: Need Zone Proximity Clusters (~50-Yard Radius) -->
+  <div id="tab-needzones" class="tab-content">
+    <div class="panel">
+      <h2>Habitat Need Zone Clusters (~50-Yard Chain Discovery)</h2>
+      <p style="font-size:0.85rem; color:var(--dim);">
+        Interacting with a single watering or feeding point sweeps a ~50-yard radius and automatically resolves sibling need zones for that herd.
+      </p>
+      <div id="needZonesContainer" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(360px, 1fr)); gap:12px; margin-top:8px;"></div>
+    </div>
+  </div>
+
+  <!-- Line 367: TAB 4: Species Lifecycles & Mortality Tables -->
+  <div id="tab-lifecycles" class="tab-content">
+    <div class="panel">
+      <h2>Species Life Cycles & Natural Despawn Rules (3 In-Game Days = 1 Year)</h2>
+      <div id="lifecyclesTableContainer" style="overflow-x:auto;"></div>
+    </div>
+  </div>
+
+  <!-- Line 375: TAB 5: Dog Companion Profile -->
   <div id="tab-k9" class="tab-content">
     <div class="main-grid">
       <section class="panel">
@@ -410,67 +421,25 @@
         <h2>Hunting Dog Field Guide</h2>
         <div class="feed-card">
           <strong style="color:var(--gold);">Blood Tracking (3/6 Active)</strong>
-          <p style="font-size:0.8rem; color:var(--dim);">Your dog can reliably follow mid-range blood trails. At 4/6 and above, it can track faint scratch wounds across solid rock and through heavy rain.</p>
+          <p style="font-size:0.8rem; color:var(--dim);">Tracks heavy, fresh blood. At 4/6 and above, it can track faint flesh scratches through water, rocks, and rain to prevent meat time degradation.</p>
         </div>
         <div class="feed-card">
-          <strong style="color:var(--gold);">Search and Quartering (Upland Birds)</strong>
+          <strong style="color:var(--gold);">Search and Quartering (0/6 Active)</strong>
           <p style="font-size:0.8rem; color:var(--dim);">Weaves ahead in brush to locate hiding Pheasants, Ptarmigans, and Wild Turkeys, flushing them into shotgun range.</p>
         </div>
       </section>
     </div>
   </div>
 
-  <!-- TAB 4: Challenges & Perk Trees -->
+  <!-- Line 430: TAB 6: Challenges & Perk Trees -->
   <div id="tab-challenges" class="tab-content">
     <div class="panel">
-      <h2>Mastery & Perk Challenge Trees</h2>
-      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:12px;">
-        
-        <div class="feed-card">
-          <div class="feed-card-header">
-            <strong>Features</strong>
-            <span class="badge" style="background:var(--blue); color:#000;">0 / 24</span>
-          </div>
-          <p style="font-size:0.8rem; color:var(--dim);">Equipment, photo mode, tripod blinds, and caller mastery.</p>
-        </div>
-
-        <div class="feed-card">
-          <div class="feed-card-header">
-            <strong>Naturalist</strong>
-            <span class="badge" style="background:var(--green); color:#000;">1 / 23</span>
-          </div>
-          <p style="font-size:0.8rem; color:var(--dim);">Need zone analysis, droppings freshness, and track identification.</p>
-        </div>
-
-        <div class="feed-card">
-          <div class="feed-card-header">
-            <strong>Scout</strong>
-            <span class="badge" style="background:var(--green); color:#000;">1 / 23</span>
-          </div>
-          <p style="font-size:0.8rem; color:var(--dim);">Viewpoints discovered, trail mapping, and stamina efficiency.</p>
-        </div>
-
-        <div class="feed-card">
-          <div class="feed-card-header">
-            <strong>Sharpshooter</strong>
-            <span class="badge" style="background:var(--green); color:#000;">1 / 18</span>
-          </div>
-          <p style="font-size:0.8rem; color:var(--dim);">Long-distance vitals (150m+), breath control, and wingshooting.</p>
-        </div>
-
-        <div class="feed-card">
-          <div class="feed-card-header">
-            <strong>Stalker</strong>
-            <span class="badge" style="background:var(--red); color:#fff;">0 / 12</span>
-          </div>
-          <p style="font-size:0.8rem; color:var(--dim);">Close-quarter stalking under 50m, scent masking, and noise suppression.</p>
-        </div>
-
-      </div>
+      <h2>Mastery & Perk Challenge Trees (100 Total)</h2>
+      <div id="challengesContainer" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:12px;"></div>
     </div>
   </div>
 
-  <!-- TAB 5: Missions -->
+  <!-- Line 438: TAB 7: Missions -->
   <div id="tab-missions" class="tab-content">
     <div class="panel">
       <h2>New Laurentia Campaign Missions</h2>
@@ -478,7 +447,7 @@
     </div>
   </div>
 
-  <!-- TAB 6: Infrastructure -->
+  <!-- Line 446: TAB 8: Infrastructure -->
   <div id="tab-infrastructure" class="tab-content">
     <div class="panel">
       <h2>Habitat Enhancements & Infrastructure</h2>
@@ -486,16 +455,18 @@
     </div>
   </div>
 
+  <!-- Line 454: Static Footer -->
   <footer>
     <span>Way of the Hunter 2 &bull; playstation-be936.web.app</span>
-    <span>2026-10-06 00:45 EDT | Version: 2.8.0</span>
+    <span>2026-10-06 03:42 EDT | Version: 3.0.0</span>
   </footer>
 
-  <!-- Firebase & Open-Source Cloud Sync -->
+  <!-- Line 460: Core Engine, Dynamic Schema Loader & Firebase -->
   <script type="module">
     import { initializeApp } from "//www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getDatabase, ref, push, set, onValue, remove } from "//www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
+    // 1. Firebase Backend Config
     const firebaseConfig = {
       apiKey: "AIzaSyDeuNBGHcwU4rFyOcsfGxLHjmEdpADacmc",
       authDomain: "entertainment-71888.firebaseapp.com",
@@ -513,8 +484,9 @@
     let currentSyncedDay = 1;
     let currentSyncedTime = "08:30";
     let watchlistCache = [];
+    let harvestSchemas = null;
+    let speciesLifespanMap = {};
 
-    // Dog Stats
     let dogStats = { commands: 0, blood: 3, search: 0 };
 
     const inGameDayInput = document.getElementById("inGameDay");
@@ -559,16 +531,22 @@
       });
     });
 
-    // 1. Fetch Open-Source Datasets
+    // 2. Fetch Open-Source JSON Engine
     async function loadOpenSourceData() {
       try {
         const base = "https://raw.githubusercontent.com/Werewolf3788/WOTH2/main/data";
-        const [specRes, missRes, infraRes] = await Promise.all([
+        
+        const [specRes, schemaRes, needRes, lifeRes, chalRes, missRes, infraRes] = await Promise.all([
           fetch(`${base}/species.json`).catch(() => null),
+          fetch(`${base}/harvest_schemas.json`).catch(() => null),
+          fetch(`${base}/need_zones.json`).catch(() => null),
+          fetch(`${base}/lifecycles.json`).catch(() => null),
+          fetch(`${base}/challenges.json`).catch(() => null),
           fetch(`${base}/missions.json`).catch(() => null),
           fetch(`${base}/infrastructure.json`).catch(() => null)
         ]);
 
+        // A. Species
         if (specRes && specRes.ok) {
           const specData = await specRes.json();
           const harvestSelect = document.getElementById("harvestSpecies");
@@ -581,6 +559,96 @@
           });
         }
 
+        // B. Dynamic Harvest Schemas
+        if (schemaRes && schemaRes.ok) {
+          harvestSchemas = await schemaRes.json();
+          renderDynamicTrophyFields();
+          document.getElementById("harvestSpecies").addEventListener("change", renderDynamicTrophyFields);
+        }
+
+        // C. Need Zones (~50yd clusters)
+        if (needRes && needRes.ok) {
+          const needData = await needRes.json();
+          const nzContainer = document.getElementById("needZonesContainer");
+          nzContainer.innerHTML = "";
+          needData.clusters.forEach(c => {
+            let zoneRows = "";
+            c.zones.forEach(z => {
+              zoneRows += `
+                <div class="zone-item">
+                  <div>
+                    <strong style="color:var(--gold);">${z.type}:</strong> ${z.landmark}
+                    <div style="font-size:0.75rem; color:var(--dim);">${z.schedule} &bull; Offset: ${z.proximity_to_center_yds} yds</div>
+                  </div>
+                  <input type="checkbox" style="width:20px; height:20px;" title="Check to discover cluster" />
+                </div>
+              `;
+            });
+
+            nzContainer.innerHTML += `
+              <div class="cluster-box">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <strong style="color:var(--blue);">${c.species}</strong>
+                  <span class="badge" style="background:#1e293b; color:var(--gold);">${c.region}</span>
+                </div>
+                <p style="font-size:0.75rem; color:var(--dim); margin-bottom:6px;">${c.cluster_notes}</p>
+                <div>${zoneRows}</div>
+              </div>
+            `;
+          });
+        }
+
+        // D. Lifecycles (Mortality & Ages)
+        if (lifeRes && lifeRes.ok) {
+          const lifeData = await lifeRes.json();
+          let tableHtml = `
+            <table style="width:100%; border-collapse:collapse; font-size:0.8rem;">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border); color:var(--dim); text-align:left;">
+                  <th style="padding:8px;">Species</th>
+                  <th style="padding:8px;">Max Age (Cap)</th>
+                  <th style="padding:8px;">Total Days</th>
+                  <th style="padding:8px;">Young / Adult / Mature</th>
+                  <th style="padding:8px;">Cull Recommendation</th>
+                </tr>
+              </thead>
+              <tbody>
+          `;
+          lifeData.species_lifecycles.forEach(l => {
+            speciesLifespanMap[l.species] = l.max_age_years;
+            tableHtml += `
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:8px; font-weight:700; color:var(--gold);">${l.species}</td>
+                <td style="padding:8px;">${l.max_age_years} Years</td>
+                <td style="padding:8px;">${l.total_lifespan_days} Days</td>
+                <td style="padding:8px;">Y: ${l.young_years.join(',')} | A: ${l.adult_years.join(',')} | M: ${l.mature_years.join(',')}</td>
+                <td style="padding:8px; color:var(--dim);">${l.cull_advisory}</td>
+              </tr>
+            `;
+          });
+          tableHtml += `</tbody></table>`;
+          document.getElementById("lifecyclesTableContainer").innerHTML = tableHtml;
+        }
+
+        // E. Challenges
+        if (chalRes && chalRes.ok) {
+          const chalData = await chalRes.json();
+          const cContainer = document.getElementById("challengesContainer");
+          cContainer.innerHTML = "";
+          Object.entries(chalData.trees).forEach(([key, tree]) => {
+            cContainer.innerHTML += `
+              <div class="feed-card">
+                <div class="feed-card-header">
+                  <strong>${tree.name}</strong>
+                  <span class="badge" style="background:var(--blue); color:#000;">Max: ${tree.total}</span>
+                </div>
+                <p style="font-size:0.8rem; color:var(--dim);">${tree.description}</p>
+              </div>
+            `;
+          });
+        }
+
+        // F. Missions
         if (missRes && missRes.ok) {
           const missData = await missRes.json();
           const mList = document.getElementById("missionsList");
@@ -599,6 +667,7 @@
           });
         }
 
+        // G. Infrastructure
         if (infraRes && infraRes.ok) {
           const infraData = await infraRes.json();
           const iList = document.getElementById("infrastructureList");
@@ -616,12 +685,35 @@
             `;
           });
         }
+
       } catch (err) {
-        console.warn("Using default game datasets", err);
+        console.warn("Could not load external datasets, using local fallback state.", err);
       }
     }
 
-    // 2. Realtime Listeners for Mode Branch
+    // Dynamic Trophy Field Generator
+    function renderDynamicTrophyFields() {
+      if (!harvestSchemas) return;
+      const selectedSpecies = document.getElementById("harvestSpecies").value;
+      const templateKey = harvestSchemas.species_mapping[selectedSpecies] || "cervid_antler";
+      const template = harvestSchemas.scoring_templates[templateKey];
+
+      document.getElementById("schemaCategoryLabel").textContent = template.category;
+
+      const container = document.getElementById("dynamicTrophyContainer");
+      container.innerHTML = "";
+
+      template.fields.forEach(field => {
+        container.innerHTML += `
+          <div class="form-group">
+            <label>${field.label} (${field.unit})</label>
+            <input type="text" class="dynamic-trophy-input" data-id="${field.id}" placeholder="${field.placeholder}" />
+          </div>
+        `;
+      });
+    }
+
+    // 3. Realtime Listeners for Cloud Mode Branch
     function initCloudListeners() {
       const modePath = `woth2_cloud/${activeMode}`;
 
@@ -647,6 +739,13 @@
         }
         const list = Object.values(snapshot.val()).reverse();
         list.forEach(h => {
+          let customTrophyDetails = "";
+          if (h.customMetrics) {
+            customTrophyDetails = Object.entries(h.customMetrics)
+              .map(([k, v]) => `<span>${k}: <strong>${v}</strong></span>`)
+              .join(" &bull; ");
+          }
+
           const card = document.createElement("div");
           card.className = "feed-card";
           card.innerHTML = `
@@ -675,12 +774,12 @@
               <div>Payout: <strong style="color:var(--green);">${h.sellPrice || 'N/A'}</strong></div>
             </div>
 
-            <!-- Trophy Section -->
+            <!-- Dynamic Trophy Section -->
             <div style="font-size:0.75rem; color:#cbd5e1; margin-top:4px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:4px;">
               <span>Score: <strong style="color:var(--purple);">${h.totalScore || 'N/A'}</strong></span>
-              <span>Beam: ${h.beam || 'N/A'} &bull; Spread: ${h.insideSpread || 'N/A'}</span>
               <span>Fitness: <strong>${h.fitness || 'N/A'}</strong> &bull; Coat: <strong>${h.coat || 'Common'}</strong></span>
             </div>
+            ${customTrophyDetails ? `<div style="font-size:0.75rem; color:var(--dim); margin-top:2px;">${customTrophyDetails}</div>` : ''}
 
             <div style="font-size:0.7rem; color:#64748b; margin-top:2px;">
               Day ${h.inGameDay} @ ${h.timeOfDeath} &bull; Recorded: ${h.timestamp}
@@ -711,18 +810,23 @@
       });
     }
 
-    // 3. Time Sync Handler
+    // 4. Time Sync Handler
     btnPushTime.addEventListener("click", () => {
       const day = parseInt(inGameDayInput.value, 10) || 1;
       const time = inGameTimeInput.value || "08:30";
       set(ref(db, `woth2_cloud/${activeMode}/clock`), { day, time });
     });
 
-    // 4. Harvest Form Submission
+    // 5. Harvest Form Submission
     const harvestForm = document.getElementById("harvestForm");
     harvestForm.addEventListener("submit", (e) => {
       e.preventDefault();
       
+      const customMetrics = {};
+      document.querySelectorAll(".dynamic-trophy-input").forEach(input => {
+        customMetrics[input.dataset.id] = input.value || "N/A";
+      });
+
       const payload = {
         species: document.getElementById("harvestSpecies").value,
         region: document.getElementById("harvestRegion").value,
@@ -746,13 +850,10 @@
         fitness: document.getElementById("harvestFitness").value,
         coat: document.getElementById("harvestCoat").value,
         weightRarity: document.getElementById("harvestWeightRarity").value,
-        beam: document.getElementById("harvestBeam").value,
-        insideSpread: document.getElementById("harvestInsideSpread").value,
-        baseCirc: document.getElementById("harvestBaseCirc").value,
-        points: document.getElementById("harvestPoints").value,
         trophy: document.getElementById("harvestTrophy").value,
         huntRating: document.getElementById("harvestHuntRating").value,
         totalScore: document.getElementById("harvestTotalScore").value,
+        customMetrics: customMetrics,
         timeOfDeath: currentSyncedTime,
         inGameDay: currentSyncedDay,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -760,14 +861,14 @@
 
       push(ref(db, `woth2_cloud/${activeMode}/harvests`), payload);
 
-      // Clear input fields
       document.getElementById("harvestShotDist").value = "";
       document.getElementById("harvestTrackDist").value = "";
       document.getElementById("harvestOrgan").value = "";
       document.getElementById("harvestTotalScore").value = "";
+      document.querySelectorAll(".dynamic-trophy-input").forEach(i => i.value = "");
     });
 
-    // 5. Watchlist Submission with Age (X/Y)
+    // 6. Watchlist Submission with Age (X/Y)
     const watchlistForm = document.getElementById("watchlistForm");
     watchlistForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -791,6 +892,8 @@
       document.getElementById("watchName").value = "";
       document.getElementById("watchFitness").value = "";
       document.getElementById("watchLocation").value = "";
+      document.getElementById("watchCurrentAge").value = "";
+      document.getElementById("watchMaxAge").value = "";
     });
 
     function renderWatchlist() {
@@ -803,7 +906,6 @@
 
       watchlistCache.forEach(item => {
         const daysLeft = item.deathDay - currentSyncedDay;
-        const yearsLeft = (daysLeft / 3).toFixed(1);
 
         let color = "var(--green)";
         let advice = "Growing in the wild. Check back next generation.";
@@ -816,7 +918,7 @@
           advice = "⚠ FINAL YEAR: Animal is in final year of life! Harvest now!";
         } else if (item.fitness >= 85.0) {
           color = "var(--gold)";
-          advice = "⭐ 5-STAR BREEDER: Allow rack to grow to max score.";
+          advice = "⭐ 5-STAR BREEDER: Allow rack/trophy to grow to max score.";
         }
 
         const card = document.createElement("div");
@@ -847,7 +949,7 @@
       });
     }
 
-    // 6. Dog Companion Counters
+    // 7. Dog Companion Counters
     document.querySelectorAll(".counter-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const type = btn.dataset.type;
@@ -866,7 +968,7 @@
       set(ref(db, `woth2_cloud/dog_stats`), dogStats);
     });
 
-    // Start
+    // Start Engine
     loadOpenSourceData();
     initCloudListeners();
   </script>
