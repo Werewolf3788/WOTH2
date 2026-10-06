@@ -1,16 +1,31 @@
 <!DOCTYPE html>
+<!-- Line 1: Way of the Hunter 2 - Community Companion & Lifecycle Engine -->
+<!-- Stamped: 2026-10-05 21:38 EDT | Version: 2.4.0 -->
 <html lang="en">
 <head>
-  <!-- Line 1: Way of the Hunter 2 - Comprehensive Community Companion -->
-  <!-- Stamped: 2026-10-05 21:12 EDT | Version: 2.2.0 -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Way of the Hunter 2 - Community Companion & Lifecycle Engine</title>
-  
+  <title>Way of the Hunter 2 Companion & Herd Tracker | New Laurentia</title>
+
+  <!-- Canonical & Search Engine Meta -->
+  <meta name="description" content="Open-source companion app for Way of the Hunter 2. Track decimal herd fitness, aggressive charge triggers, lifespans, and New Laurentia missions." />
+  <meta name="keywords" content="Way of the Hunter 2, WOTH2, herd management, fitness culling, New Laurentia, animal lifespans, aggressive animals, companion app" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="//playstation-be936.web.app/" />
+
+  <!-- Open Graph / Unified Social Preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="//playstation-be936.web.app/" />
+  <meta property="og:title" content="Way of the Hunter 2 Companion & Herd Tracker" />
+  <meta property="og:description" content="Manage herd genetics, track seasonal trails, monitor animal lifespans, and diagnose blood trails." />
+  <meta property="og:image" content="//playstation-be936.web.app/favicon.ico" />
+
+  <!-- Unified Branding Favicon & Touch Icon -->
   <link rel="icon" type="image/jpeg" href="//playstation-be936.web.app/favicon.ico" />
   <link rel="apple-touch-icon" href="//playstation-be936.web.app/favicon.ico" />
 
   <style>
+    /* Section 1: Color Tokens & High-Contrast Design Palette */
     :root {
       --bg-dark: #070d18;
       --panel-dark: #121c2d;
@@ -20,6 +35,7 @@
       --accent-blue: #38bdf8;
       --accent-red: #ef4444;
       --accent-purple: #c084fc;
+      --hazard-crimson: #b91c1c;
       --text-main: #f8fafc;
       --text-dim: #94a3b8;
       --border: #28374d;
@@ -35,6 +51,7 @@
       min-height: 100vh;
     }
 
+    /* Section 2: Header, Nav, and Touch Targets */
     header {
       background: var(--panel-dark);
       border-bottom: 1px solid var(--border);
@@ -53,6 +70,12 @@
       font-size: 1.15rem;
       font-weight: 700;
       color: var(--accent-gold);
+    }
+
+    .brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
     }
 
     .auth-bar {
@@ -110,6 +133,7 @@
     .btn-green { background: var(--accent-green); color: #fff; border: none; }
     .btn-red { background: var(--accent-red); color: #fff; border: none; }
 
+    /* Section 3: Responsive Multi-Column Layout Grid */
     .tab-content {
       display: none;
       padding: 16px;
@@ -169,6 +193,7 @@
       gap: 6px;
     }
 
+    /* Section 4: Visual Status Badges */
     .pin-tag {
       font-size: 0.75rem;
       font-weight: 700;
@@ -183,6 +208,7 @@
     .tag-zone { background: var(--accent-blue); color: #000; }
     .tag-trail { background: var(--accent-purple); color: #000; }
     .tag-blood { background: #be185d; color: #fff; }
+    .tag-danger { background: var(--hazard-crimson); color: #fff; font-weight: 800; border: 1px solid #f87171; }
 
     footer {
       background: var(--panel-dark);
@@ -197,10 +223,11 @@
 </head>
 <body>
 
-  <!-- Top Header Navigation -->
+  <!-- Line 172: Header Navigation & Authentication -->
   <header>
     <div class="brand">
-      <span>🌲 Way of the Hunter 2 Companion &bull; Ecosystem Engine</span>
+      <img src="//playstation-be936.web.app/favicon.ico" alt="" />
+      <span>🌲 Way of the Hunter 2 &bull; Ecosystem Companion</span>
     </div>
 
     <div class="auth-bar" id="authSection">
@@ -212,24 +239,24 @@
     </div>
   </header>
 
-  <!-- Section Tabs -->
+  <!-- Line 189: Navigation Tabs -->
   <nav class="tab-bar">
-    <button class="nav-tab active" data-tab="tab-map">Field Tracker & Trails</button>
+    <button class="nav-tab active" data-tab="tab-map">Field Tracker & Hazards</button>
     <button class="nav-tab" data-tab="tab-lifecycles">Mortality & Lifespans</button>
     <button class="nav-tab" data-tab="tab-stewardship">Habitat Stewardship</button>
     <button class="nav-tab" data-tab="tab-missions">Missions (33)</button>
     <button class="nav-tab" data-tab="tab-infrastructure">Infrastructure (32)</button>
-    <button class="nav-tab" data-tab="tab-ethics">Weapon Tiers (1-8)</button>
+    <button class="nav-tab" data-tab="tab-ethics">Weapon & Defense Tiers (1-8)</button>
   </nav>
 
-  <!-- TAB 1: Live Field Tracker & Seasonal Trails -->
+  <!-- Line 200: TAB 1 - Field Tracker, Seasonal Trails & Hazard Alerter -->
   <div id="tab-map" class="tab-content active">
     <div class="dashboard-grid">
       
-      <!-- Left Panel: Regional Genetic Selector & Trails -->
+      <!-- Panel 1A: Region & Season Corridors -->
       <section class="panel">
         <h2>Regional Habitat Select</h2>
-        <label for="regionSelect" style="font-size: 0.85rem; color: var(--text-dim);">Active Region:</label>
+        <label for="regionSelect" style="font-size: 0.85rem; color: var(--text-dim);">Active Region (Isolated Genetics):</label>
         <select id="regionSelect">
           <option value="wetiko_foothills">Wetiko Foothills (Mikael Anderson)</option>
           <option value="slalakum_shore">Slalakum Shore (Juniper)</option>
@@ -240,25 +267,31 @@
           <option value="mishipeshu_swamp">Mishipeshu Swamp (Swamplands)</option>
         </select>
 
-        <h2>Seasonal Corridor Switcher</h2>
+        <h2>Seasonal Corridor Routes</h2>
         <label for="seasonSelect" style="font-size: 0.85rem; color: var(--text-dim);">Active Season:</label>
         <select id="seasonSelect">
-          <option value="summer">Summer (High Ridges & Lakes)</option>
-          <option value="winter">Winter (Sheltered Lowland Valleys)</option>
+          <option value="summer">Summer (High Elevation Ridges & Shorelines)</option>
+          <option value="winter">Winter (Sheltered Lowland Valleys & Brush)</option>
         </select>
 
         <div style="background: #070d18; padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
-          <span style="font-size: 0.8rem; color: var(--text-dim);">Active Corridor Route:</span>
-          <p id="trailDetailText" style="font-size: 0.85rem; color: var(--accent-blue); margin-top: 4px;">Loading seasonal corridor data...</p>
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Seasonal Corridor Route:</span>
+          <p id="trailDetailText" style="font-size: 0.85rem; color: var(--accent-blue); margin-top: 4px;">Loading migration corridors...</p>
         </div>
 
         <div style="background: #070d18; padding: 10px; border-radius: 6px; border: 1px solid var(--border);">
           <span style="font-size: 0.8rem; color: var(--text-dim);">Wide Grazing Area:</span>
-          <p id="grazingDetailText" style="font-size: 0.85rem; color: var(--accent-green); margin-top: 4px;">Loading grazing area data...</p>
+          <p id="grazingDetailText" style="font-size: 0.85rem; color: var(--accent-green); margin-top: 4px;">Loading grazing areas...</p>
+        </div>
+
+        <h2>Aggression & Charge Advisory</h2>
+        <div id="regionHazardBox" style="background: #070d18; padding: 10px; border-radius: 6px; border: 1px solid var(--hazard-crimson);">
+          <span style="font-size: 0.8rem; color: #f87171; font-weight: 700;">Local Dangerous Game:</span>
+          <p id="hazardAlertText" style="font-size: 0.85rem; color: var(--text-main); margin-top: 4px;">Evaluating regional predators...</p>
         </div>
       </section>
 
-      <!-- Center Panel: Pin, Lifecycle, and Blood Logger -->
+      <!-- Panel 1B: Pin Logging Engine -->
       <section class="panel">
         <h2>Log Pin or In-Game Marker</h2>
         
@@ -269,13 +302,14 @@
               <select id="pinSpecies" style="width: 100%;"></select>
             </div>
             <div>
-              <label style="font-size: 0.85rem; color: var(--text-dim);">Pin Type</label>
+              <label style="font-size: 0.85rem; color: var(--text-dim);">Pin / Hazard Category</label>
               <select id="pinCategory" style="width: 100%;">
                 <option value="zone">Need Zone (Drink/Feed/Rest)</option>
                 <option value="trail">Seasonal Trail Waypoint</option>
                 <option value="grazing">Wide Grazing Corridor</option>
                 <option value="cull">Cull Target (<55% Fitness)</option>
                 <option value="mature">5-Star Trophy Male</option>
+                <option value="danger">⚠️ Aggressive Animal Hazard (Charge Risk)</option>
                 <option value="blood">Blood Trail / Hit Site</option>
               </select>
             </div>
@@ -287,7 +321,7 @@
               <select id="pinStage" style="width: 100%;">
                 <option value="young">Young (Do Not Shoot)</option>
                 <option value="adult">Adult (Evaluating Genetics)</option>
-                <option value="mature_early">Mature (Early Trophy Window)</option>
+                <option value="mature_early">Mature Early (Trophy Window)</option>
                 <option value="mature_late">Mature Late (Urgent - Dying Soon)</option>
               </select>
             </div>
@@ -305,7 +339,7 @@
                 <option value="pink">Pink Bubbles (Lungs/Heart - Fatal)</option>
                 <option value="crimson">Dark Crimson (Liver - Fatal Track)</option>
                 <option value="stomach">Red + Food (Stomach - Slow)</option>
-                <option value="scratch">Low Red Volume (Scratch - Survives)</option>
+                <option value="scratch">Low Red Volume (Scratch - Non-Fatal)</option>
               </select>
             </div>
             <div>
@@ -321,7 +355,7 @@
 
           <div>
             <label style="font-size: 0.85rem; color: var(--text-dim);">Location Details / Landmark Sector</label>
-            <input type="text" id="pinLocation" placeholder="e.g. South willow flats near feeding tree" required style="width: 100%;" />
+            <input type="text" id="pinLocation" placeholder="e.g. Willows 100m west of bridge, charging bear sighted" required style="width: 100%;" />
           </div>
 
           <button type="submit" class="btn-green">Sync Marker to Cloud</button>
@@ -331,7 +365,7 @@
         <div id="liveMarkersFeed" style="display: flex; flex-direction: column; gap: 8px;"></div>
       </section>
 
-      <!-- Right Panel: Mortality & Genetic Advisor -->
+      <!-- Panel 1C: Culling Diagnostics & Rules -->
       <section class="panel">
         <h2>Mortality Clock & Culling Engine</h2>
         <div style="background: #070d18; padding: 12px; border-radius: 6px; border: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px;">
@@ -341,25 +375,25 @@
           <div id="fitnessResult" style="font-size: 0.85rem; font-weight: 600; margin-top: 4px;"></div>
         </div>
 
-        <h2>Trail Reading Fundamentals</h2>
-        <div class="list-card" style="border-left: 4px solid var(--accent-purple);">
-          <strong style="color: var(--accent-purple);">The Cloven Hoof Rule</strong>
-          <span style="font-size: 0.8rem; color: var(--text-dim);">The V-split in deer, elk, and sheep tracks always points in the direction the animal is heading.</span>
+        <h2>Aggression Defense Protocols</h2>
+        <div class="list-card" style="border-left: 4px solid var(--hazard-crimson);">
+          <strong style="color: #f87171;">Grizzly & Bison Charging</strong>
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Approaching wounded game within 50m triggers immediate charge behavior. Equip a high-energy sidearm (.44 Mag or .454 Casull) when searching dense brush.</span>
         </div>
         <div class="list-card" style="border-left: 4px solid var(--accent-red);">
-          <strong style="color: var(--accent-red);">The Natural Death Rule</strong>
-          <span style="font-size: 0.8rem; color: var(--text-dim);">Every 3 days equals 1 in-game year. Mature animals die and despawn permanently if not hunted before their lifespan ends.</span>
+          <strong style="color: var(--accent-red);">The 3-Day Natural Death Rule</strong>
+          <span style="font-size: 0.8rem; color: var(--text-dim);">3 in-game days = 1 in-game year. Unharvested mature animals die and despawn permanently at the end of their lifespan.</span>
         </div>
       </section>
     </div>
   </div>
 
-  <!-- TAB 2: Lifespans & Mortality Clocks -->
+  <!-- Line 357: TAB 2 - Species Lifespans & Mortality Clocks -->
   <div id="tab-lifecycles" class="tab-content">
     <div class="panel">
       <h2>Species Lifespans & Natural Death Schedules (15 Native Species)</h2>
       <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 12px;">
-        1 in-game year = 3 in-game days. Harvest high-fitness animals before their mature window expires to avoid losing trophies to old age.
+        Every 3 in-game days advances the ecosystem by 1 in-game year. Harvest mature animals before their final window closes.
       </p>
       <table class="data-table">
         <thead>
@@ -369,7 +403,7 @@
             <th>Young Phase</th>
             <th>Adult Phase</th>
             <th>Mature Phase (Harvest Window)</th>
-            <th>Mortality Warning</th>
+            <th>Mortality Despawn Warning</th>
           </tr>
         </thead>
         <tbody id="lifecycleTableBody"></tbody>
@@ -377,18 +411,18 @@
     </div>
   </div>
 
-  <!-- TAB 3: Habitat Stewardship & Quality -->
+  <!-- Line 381: TAB 3 - Habitat Stewardship & Quality -->
   <div id="tab-stewardship" class="tab-content">
     <div class="panel">
       <h2>Reserve Population Stewardship & Habitat Health</h2>
       <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 12px;">
-        Culling low-fitness mature males and fixing habitats increases the average fitness score across New Laurentia's 7 sectors.
+        Selective culling, feeder installations, and pollution cleanup lift the average genetic fitness of each region.
       </p>
       <div id="stewardshipGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px;"></div>
     </div>
   </div>
 
-  <!-- TAB 4: Campaign Missions (33) -->
+  <!-- Line 392: TAB 4 - Campaign Missions (33) -->
   <div id="tab-missions" class="tab-content">
     <div class="panel">
       <h2>New Laurentia Campaign & Local Missions (33 Total)</h2>
@@ -396,7 +430,7 @@
     </div>
   </div>
 
-  <!-- TAB 5: Habitat Enhancements (32) -->
+  <!-- Line 401: TAB 5 - Habitat Enhancements (32) -->
   <div id="tab-infrastructure" class="tab-content">
     <div class="panel">
       <h2>Habitat Enhancements & Cleanups (32 Total)</h2>
@@ -404,16 +438,18 @@
     </div>
   </div>
 
-  <!-- TAB 6: Weapon Tiers (1 to 8) -->
+  <!-- Line 410: TAB 6 - Weapon Ethics, Aggression & Defensive Sidearms -->
   <div id="tab-ethics" class="tab-content">
     <div class="panel">
-      <h2>Official Weapon & Caliber Ethics Roster</h2>
+      <h2>Official Weapon Tiers & Defensive Sidearms</h2>
       <table class="data-table">
         <thead>
           <tr>
             <th>Tier</th>
             <th>Species</th>
-            <th>Calibers & Firearm Classes</th>
+            <th>Recommended Primary Firearm</th>
+            <th>Aggression Level</th>
+            <th>Recommended Defensive Sidearm</th>
           </tr>
         </thead>
         <tbody id="ethicsTableBody"></tbody>
@@ -421,19 +457,19 @@
     </div>
   </div>
 
-  <!-- Visible Stamped 24-Hour Footer -->
+  <!-- Line 429: Visible 24-Hour New York Time Footer -->
   <footer>
     <span>Way of the Hunter 2 &bull; playstation-be936.web.app</span>
-    <span id="systemStamp">2026-10-05 21:12 EDT | Version: 2.2.0</span>
+    <span id="systemStamp">2026-10-05 21:38 EDT | Version: 2.4.0</span>
   </footer>
 
-  <!-- Firebase v9 Web Integration Script -->
+  <!-- Line 435: Firebase v9 Web Integration Script -->
   <script type="module">
     import { initializeApp } from "//www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "//www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
     import { getDatabase, ref, push, onValue } from "//www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-    // Application Configuration
+    // Line 441: Core Firebase Configuration
     const firebaseConfig = {
       apiKey: "AIzaSyDeuNBGHcwU4rFyOcsfGxLHjmEdpADacmc",
       authDomain: "entertainment-71888.firebaseapp.com",
@@ -453,25 +489,26 @@
     let activeRegionKey = "wetiko_foothills";
     let activeSeason = "summer";
 
-    // Embedded Game Datasets
+    // Line 461: Complete Species, Tiers, Aggression, and Calibers Dataset
     const SpeciesData = [
-      { name: "Mallard", tier: 1, regions: ["lake_sasquatch", "mishipeshu_swamp", "slalakum_shore", "thunderbird_muskeg", "wetiko_foothills"], ammo: "28ga / 12ga Birdshot / .22 LR" },
-      { name: "Snowshoe Hare", tier: 1, regions: ["jackalope_cordillera", "lake_sasquatch"], ammo: ".22 LR" },
-      { name: "White-tailed ptarmigan", tier: 1, regions: ["jackalope_cordillera", "lake_sasquatch"], ammo: ".22 LR / 28ga" },
-      { name: "Eastern wild turkey", tier: 2, regions: ["mishipeshu_swamp", "slalakum_shore", "thunderbird_muskeg", "wetiko_foothills"], ammo: "28ga Semi-Auto / .22 LR" },
-      { name: "American wolverine", tier: 3, regions: ["jackalope_cordillera", "kermode_plateau", "slalakum_shore"], ammo: ".243 Win / 6.5mm" },
-      { name: "Northwestern white-tailed deer", tier: 4, regions: ["lake_sasquatch", "kermode_plateau", "mishipeshu_swamp", "slalakum_shore", "wetiko_foothills"], ammo: "6.5mm Creedmoor / .30-06" },
-      { name: "Rocky Mountain pronghorn", tier: 4, regions: ["kermode_plateau", "slalakum_shore"], ammo: "6.5mm / .270" },
-      { name: "Northwestern wolf", tier: 4, regions: ["jackalope_cordillera", "kermode_plateau", "lake_sasquatch", "mishipeshu_swamp", "slalakum_shore", "thunderbird_muskeg", "wetiko_foothills"], ammo: "6.5mm / .30-06" },
-      { name: "Central European boar", tier: 5, regions: ["lake_sasquatch", "mishipeshu_swamp", "slalakum_shore", "wetiko_foothills"], ammo: ".30-06 / .308 Win" },
-      { name: "Dall sheep", tier: 5, regions: ["jackalope_cordillera", "lake_sasquatch", "kermode_plateau"], ammo: "6.5mm / .270 Win" },
-      { name: "Rocky Mountain mule deer", tier: 6, regions: ["jackalope_cordillera", "kermode_plateau", "slalakum_shore", "wetiko_foothills"], ammo: ".30-06 / .300 Win Mag" },
-      { name: "Grizzly bear", tier: 7, regions: ["jackalope_cordillera", "kermode_plateau", "lake_sasquatch"], ammo: ".300 Win Mag / .338 Lapua" },
-      { name: "Rocky Mountain elk", tier: 7, regions: ["kermode_plateau", "slalakum_shore", "wetiko_foothills"], ammo: ".30-06 / .300 Win Mag" },
-      { name: "Western moose", tier: 8, regions: ["mishipeshu_swamp", "thunderbird_muskeg"], ammo: ".300 Win Mag / .338 Lapua" },
-      { name: "Wood bison", tier: 8, regions: ["kermode_plateau", "slalakum_shore"], ammo: ".338 Lapua / .375 Mag" }
+      { name: "Mallard", tier: 1, regions: ["lake_sasquatch", "mishipeshu_swamp", "slalakum_shore", "thunderbird_muskeg", "wetiko_foothills"], ammo: "28ga / 12ga Birdshot / .22 LR", aggression: "Passive", defensive: "None needed" },
+      { name: "Snowshoe Hare", tier: 1, regions: ["jackalope_cordillera", "lake_sasquatch"], ammo: ".22 LR", aggression: "Passive", defensive: "None needed" },
+      { name: "White-tailed ptarmigan", tier: 1, regions: ["jackalope_cordillera", "lake_sasquatch"], ammo: ".22 LR / 28ga", aggression: "Passive", defensive: "None needed" },
+      { name: "Eastern wild turkey", tier: 2, regions: ["mishipeshu_swamp", "slalakum_shore", "thunderbird_muskeg", "wetiko_foothills"], ammo: "28ga Semi-Auto / .22 LR", aggression: "Passive", defensive: "None needed" },
+      { name: "American wolverine", tier: 3, regions: ["jackalope_cordillera", "kermode_plateau", "slalakum_shore"], ammo: ".243 Win / 6.5mm", aggression: "Defensive / Territorial", defensive: ".357 Magnum / 10mm Auto" },
+      { name: "Northwestern white-tailed deer", tier: 4, regions: ["lake_sasquatch", "kermode_plateau", "mishipeshu_swamp", "slalakum_shore", "wetiko_foothills"], ammo: "6.5mm Creedmoor / .30-06", aggression: "Passive", defensive: "None needed" },
+      { name: "Rocky Mountain pronghorn", tier: 4, regions: ["kermode_plateau", "slalakum_shore"], ammo: "6.5mm / .270", aggression: "Passive", defensive: "None needed" },
+      { name: "Northwestern wolf", tier: 4, regions: ["jackalope_cordillera", "kermode_plateau", "lake_sasquatch", "mishipeshu_swamp", "slalakum_shore", "thunderbird_muskeg", "wetiko_foothills"], ammo: "6.5mm / .30-06", aggression: "Predatory Pack", defensive: "10mm Auto / .357 Magnum" },
+      { name: "Central European boar", tier: 5, regions: ["lake_sasquatch", "mishipeshu_swamp", "slalakum_shore", "wetiko_foothills"], ammo: ".30-06 / .308 Win", aggression: "Aggressive Charge", defensive: ".44 Magnum / 10mm Auto" },
+      { name: "Dall sheep", tier: 5, regions: ["jackalope_cordillera", "lake_sasquatch", "kermode_plateau"], ammo: "6.5mm / .270 Win", aggression: "Passive", defensive: "None needed" },
+      { name: "Rocky Mountain mule deer", tier: 6, regions: ["jackalope_cordillera", "kermode_plateau", "slalakum_shore", "wetiko_foothills"], ammo: ".30-06 / .300 Win Mag", aggression: "Passive", defensive: "None needed" },
+      { name: "Grizzly bear", tier: 7, regions: ["jackalope_cordillera", "kermode_plateau", "lake_sasquatch"], ammo: ".300 Win Mag / .338 Lapua", aggression: "Apex Lethal Aggression", defensive: ".44 Magnum / .454 Casull" },
+      { name: "Rocky Mountain elk", tier: 7, regions: ["kermode_plateau", "slalakum_shore", "wetiko_foothills"], ammo: ".30-06 / .300 Win Mag", aggression: "Defensive Rut", defensive: ".44 Magnum" },
+      { name: "Western moose", tier: 8, regions: ["mishipeshu_swamp", "thunderbird_muskeg"], ammo: ".300 Win Mag / .338 Lapua", aggression: "Territorial Charge", defensive: ".44 Magnum / .454 Casull" },
+      { name: "Wood bison", tier: 8, regions: ["kermode_plateau", "slalakum_shore"], ammo: ".338 Lapua / .375 Mag", aggression: "Territorial Trample", defensive: ".454 Casull / .375 Rifle" }
     ];
 
+    // Line 481: Lifecycles and Natural Mortality Dataset
     const LifecyclesData = [
       { species: "Mallard", years: 4, young: "Year 1", adult: "Year 2", mature: "Years 3-4", warning: "Fast turnover; despawns at Year 4 end (Day 12)." },
       { species: "Snowshoe Hare", years: 4, young: "Year 1", adult: "Year 2", mature: "Years 3-4", warning: "Rapid death cycle; harvest before 12 in-game days." },
@@ -490,44 +527,53 @@
       { species: "Wood bison", years: 18, young: "Years 1-5", adult: "Years 6-12", mature: "Years 13-18", warning: "Heavy horn bases require full maturity; dies after Day 54." }
     ];
 
+    // Line 501: Seasonal Trails & Habitat Corridors
     const TrailsData = {
       wetiko_foothills: {
         summer: "Northern alpine ridge transitions and open sunlit hillsides.",
         winter: "Sheltered pine creek basins with thermal brush bedding.",
-        grazing: "Wide grassland clearings along lake drainages between 07:00 and 11:00."
+        grazing: "Wide grassland clearings along lake drainages between 07:00 and 11:00.",
+        hazards: "None (Mule deer & elk territory). Watch for occasional wandering wolves."
       },
       slalakum_shore: {
         summer: "Breeze-cooled coastal sedge terraces and shoreline delta crossings.",
         winter: "Deep windbreak timber corridors sheltered from storm winds.",
-        grazing: "Broad coastal grass flats where herds meander in lines."
+        grazing: "Broad coastal grass flats where bison herds meander in lines.",
+        hazards: "Wood Bison charge risk within 50m. Wolves prowling southern shoreline."
       },
       thunderbird_muskeg: {
         summer: "Shallow muskeg lake margins and birch flat feeding zones.",
         winter: "Dense spruce island hammocks offering wind deflection.",
-        grazing: "Swamp willow thickets and riparian grass corridors."
+        grazing: "Swamp willow thickets and riparian grass corridors.",
+        hazards: "Aggressive sick Western Moose in dense peat swamps. Carry .44 Magnum."
       },
       jackalope_cordillera: {
         summer: "Exposed mountain saddles and open scree fields.",
         winter: "Lower cliff faces where wind scours away snow cover.",
-        grazing: "Alpine tundra shelves with escape rock within 50 meters."
+        grazing: "Alpine tundra shelves with escape rock within 50 meters.",
+        hazards: "Apex Grizzly Bear lethal charge hazard in subalpine valleys."
       },
       kermode_plateau: {
         summer: "High elevation rolling plateaus and open summit meadows.",
         winter: "South-facing lower plateau benches.",
-        grazing: "Wide rolling plateau meadows; herd members spread out 100+ meters."
+        grazing: "Wide rolling plateau meadows; elk spread out 100+ meters.",
+        hazards: "Grizzly bears & aggressive Wood Bison herds roaming plateau rim."
       },
       lake_sasquatch: {
         summer: "Lakeshore wetlands and water transition trails.",
         winter: "Dense hemlock and spruce canopies for snow cover.",
-        grazing: "Open grassy flats between eastern cabins and lakeshore."
+        grazing: "Open grassy flats between eastern cabins and lakeshore.",
+        hazards: "Grizzly bears along northeastern shoreline. Boars in brush."
       },
       mishipeshu_swamp: {
         summer: "Waterway channels and open marsh flats.",
         winter: "Hardwood timber stands on swamp border ridges.",
-        grazing: "Reedy marsh corridors and shallow water feeding basins."
+        grazing: "Reedy marsh corridors and shallow water feeding basins.",
+        hazards: "Wild boars & territorial Western Moose cornered in deep water."
       }
     };
 
+    // Line 545: Regional Stewardship
     const StewardshipData = [
       { region: "Wetiko Foothills", status: "Healthy (74% Avg)", quota: "1 Low-Fitness Mature Cull", tip: "Mikael Anderson's territory. High-ranking Mule deer herds." },
       { region: "Slalakum Shore", status: "Stable (65% Avg)", quota: "2 Culls Required", tip: "Juniper's dog training hub. Feeder installation required for bison boost." },
@@ -538,6 +584,7 @@
       { region: "Mishipeshu Swamp", status: "Vulnerable (54% Avg)", quota: "Cull Sick Moose (0/3)", tip: "Moose population suffering from disease. Regina requires intervention." }
     ];
 
+    // Line 557: 33 Campaign Missions
     const MissionsData = [
       { name: "For the Hearth", source: "Angel", reward: "Story Progress", desc: "Harvest a male Mule deer near Lodge. Taxidermy it." },
       { name: "For the Hunt", source: "Angel", reward: "Story Progress", desc: "Place Mule deer in lodge diorama with mid-sized herbivore." },
@@ -574,6 +621,7 @@
       { name: "Artificial route", source: "Slalakum Shore", reward: "$1,800 | 100 XP", desc: "Harvest 70%+ Pronghorn heart shot from 200m+." }
     ];
 
+    // Line 595: 32 Infrastructure Tasks
     const InfrastructureData = [
       { name: "Lake Sasquatch Pollution Cleanse", cost: "$5,670", impact: "High", desc: "Clears toxic water so Whitetail deer can reach Thriving." },
       { name: "Thunderbird Muskeg Weed Cleanse (3 Sites)", cost: "$3,015 ea", impact: "High", desc: "Removes invasive plant species affecting turkeys/mallards." },
@@ -587,9 +635,9 @@
       { name: "Kermode Plateau Highland Stands (2)", cost: "$3,030 - $3,735", impact: "Advantage", desc: "Constructs 360-degree glassing positions." }
     ];
 
-    // DOM Ready Listener
+    // Line 610: DOMContentLoaded Initialization & Gatekeepers
     document.addEventListener("DOMContentLoaded", () => {
-      // Tab Navigation
+      // Tab Switching
       const tabs = document.querySelectorAll(".nav-tab");
       tabs.forEach(tab => {
         tab.addEventListener("click", () => {
@@ -600,7 +648,7 @@
         });
       });
 
-      // DOM Elements
+      // Element References
       const btnLogin = document.getElementById("btnLogin");
       const btnLogout = document.getElementById("btnLogout");
       const userProfile = document.getElementById("userProfile");
@@ -610,13 +658,14 @@
       const seasonSelect = document.getElementById("seasonSelect");
       const trailDetailText = document.getElementById("trailDetailText");
       const grazingDetailText = document.getElementById("grazingDetailText");
+      const hazardAlertText = document.getElementById("hazardAlertText");
       const pinSpecies = document.getElementById("pinSpecies");
       const markerForm = document.getElementById("markerForm");
       const liveMarkersFeed = document.getElementById("liveMarkersFeed");
       const btnCheckFitness = document.getElementById("btnCheckFitness");
       const fitnessResult = document.getElementById("fitnessResult");
 
-      // Auth Observer
+      // Line 640: Auth Observer
       onAuthStateChanged(auth, (user) => {
         currentUser = user;
         if (user) {
@@ -634,18 +683,19 @@
       if (btnLogin) btnLogin.addEventListener("click", () => signInWithPopup(auth, provider));
       if (btnLogout) btnLogout.addEventListener("click", () => signOut(auth));
 
-      // Region & Season Changes
+      // Line 658: Update Regional Corridors & Hazards
       function updateTrailsAndSpecies() {
-        const regionalTrails = TrailsData[activeRegionKey] || { summer: "N/A", winter: "N/A", grazing: "N/A" };
+        const regionalTrails = TrailsData[activeRegionKey] || { summer: "N/A", winter: "N/A", grazing: "N/A", hazards: "None" };
         trailDetailText.textContent = activeSeason === "summer" ? regionalTrails.summer : regionalTrails.winter;
         grazingDetailText.textContent = regionalTrails.grazing;
+        hazardAlertText.textContent = regionalTrails.hazards;
 
         pinSpecies.innerHTML = "";
         const available = SpeciesData.filter(s => s.regions.includes(activeRegionKey));
         available.forEach(s => {
           const opt = document.createElement("option");
           opt.value = s.name;
-          opt.textContent = `${s.name} (Tier ${s.tier})`;
+          opt.textContent = `${s.name} (Tier ${s.tier}) - ${s.aggression}`;
           pinSpecies.appendChild(opt);
         });
       }
@@ -665,7 +715,7 @@
         });
       }
 
-      // Marker Submit
+      // Line 690: Marker Submission with Write Protection
       if (markerForm) {
         markerForm.addEventListener("submit", async (e) => {
           e.preventDefault();
@@ -710,14 +760,14 @@
         });
       }
 
-      // Fitness & Mortality Test
+      // Line 735: Fitness Evaluation Engine
       if (btnCheckFitness) {
         btnCheckFitness.addEventListener("click", () => {
           const val = parseFloat(document.getElementById("testFitnessVal").value);
           if (isNaN(val)) return;
 
           if (val < 55.0) {
-            fitnessResult.textContent = `${val.toFixed(1)}%: CULL IMMEDIATELY. Remove mature animal before generation turn so genetics do not factor into new fawns!`;
+            fitnessResult.textContent = `${val.toFixed(1)}%: CULL IMMEDIATELY. Inferior genetics. Remove before generation roll so genetics do not factor into replacement fawns.`;
             fitnessResult.style.color = "var(--accent-red)";
           } else if (val >= 55.0 && val < 70.0) {
             fitnessResult.textContent = `${val.toFixed(1)}%: AVERAGE. Monitor adult antler progression; cull if star rating stalls.`;
@@ -729,7 +779,7 @@
         });
       }
 
-      // Live Markers Binder with Write-Protection Fallback
+      // Line 755: Regional Pins Sync Gatekeeper
       function bindRegionalPins(regionKey) {
         const storageKey = `woth2_cache_${currentUser ? currentUser.uid : "guest"}_${regionKey}`;
 
@@ -741,21 +791,23 @@
 
         const pinsRef = ref(db, `woth2_users/${currentUser.uid}/markers/${regionKey}`);
         onValue(pinsRef, (snapshot) => {
-          if (snapshot.exists()) {
+          if (snapshot.exists() && snapshot.val() !== null) {
             const data = Object.values(snapshot.val());
             localStorage.setItem(storageKey, JSON.stringify(data));
             renderPins(data);
           } else {
+            console.warn("RTDB node empty or null, reading existing localStorage state.");
             const cached = JSON.parse(localStorage.getItem(storageKey) || "[]");
             renderPins(cached);
           }
         }, (err) => {
-          console.warn("Snapshot fetch failed, using local cache:", err);
+          console.warn("RTDB connection error, maintaining local state:", err);
           const cached = JSON.parse(localStorage.getItem(storageKey) || "[]");
           renderPins(cached);
         });
       }
 
+      // Line 783: Pin Card Renderer
       function renderPins(pins) {
         liveMarkersFeed.innerHTML = "";
         if (!pins.length) {
@@ -771,6 +823,7 @@
           if (pin.category === "mature") tagClass = "tag-mature";
           if (pin.category === "cull") tagClass = "tag-cull";
           if (pin.category === "blood") tagClass = "tag-blood";
+          if (pin.category === "danger") tagClass = "tag-danger";
           if (pin.category === "trail" || pin.category === "grazing") tagClass = "tag-trail";
 
           card.innerHTML = `
@@ -788,6 +841,7 @@
         });
       }
 
+      // Line 817: LocalStorage Fallback Handler
       function saveLocalFallback(regionKey, payload) {
         const key = `woth2_cache_${currentUser ? currentUser.uid : "guest"}_${regionKey}`;
         const existing = JSON.parse(localStorage.getItem(key) || "[]");
@@ -796,7 +850,7 @@
         renderPins(existing);
       }
 
-      // Populate Lifecycles Table
+      // Line 826: Populate Lifecycles Table
       const lifecycleBody = document.getElementById("lifecycleTableBody");
       LifecyclesData.forEach(l => {
         const row = document.createElement("tr");
@@ -811,7 +865,7 @@
         lifecycleBody.appendChild(row);
       });
 
-      // Populate Stewardship Grid
+      // Line 840: Populate Stewardship Grid
       const stewardshipContainer = document.getElementById("stewardshipGrid");
       StewardshipData.forEach(s => {
         const card = document.createElement("div");
@@ -827,7 +881,7 @@
         stewardshipContainer.appendChild(card);
       });
 
-      // Populate Mission Cards
+      // Line 855: Populate Missions Cards
       const missionsContainer = document.getElementById("missionsList");
       MissionsData.forEach(m => {
         const card = document.createElement("div");
@@ -843,7 +897,7 @@
         missionsContainer.appendChild(card);
       });
 
-      // Populate Infrastructure Cards
+      // Line 870: Populate Infrastructure Cards
       const infraContainer = document.getElementById("infrastructureList");
       InfrastructureData.forEach(item => {
         const card = document.createElement("div");
@@ -859,7 +913,7 @@
         infraContainer.appendChild(card);
       });
 
-      // Populate Ethics Table
+      // Line 885: Populate Ethics & Aggressive Defense Table
       const tableBody = document.getElementById("ethicsTableBody");
       SpeciesData.forEach(s => {
         const row = document.createElement("tr");
@@ -867,11 +921,13 @@
           <td><strong>Tier ${s.tier}</strong></td>
           <td>${s.name}</td>
           <td><strong>${s.ammo}</strong></td>
+          <td><span style="color:${s.aggression.includes('Aggression') || s.aggression.includes('Charge') ? 'var(--accent-red)' : 'var(--text-main)'}; font-weight:600;">${s.aggression}</span></td>
+          <td><strong style="color:var(--accent-purple);">${s.defensive}</strong></td>
         `;
         tableBody.appendChild(row);
       });
 
-      // Initial render
+      // Initial region selection trigger
       updateTrailsAndSpecies();
     });
   </script>
