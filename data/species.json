@@ -1,0 +1,96 @@
+{
+  "reserve": "New Laurentia",
+  "total_species": 15,
+  "species": [
+    {
+      "name": "Mallard",
+      "scientific_name": "Anas platyrhynchos platyrhynchos",
+      "tier": 1,
+      "regions": ["Lake Sasquatch", "Mishipeshu Swamp", "Slalakum Shore", "Thunderbird Muskeg", "Wetiko Foothills"]
+    },
+    {
+      "name": "Snowshoe Hare",
+      "scientific_name": "Lepus americanus americanus",
+      "tier": 1,
+      "regions": ["Jackalope Cordillera", "Lake Sasquatch"]
+    },
+    {
+      "name": "White-tailed ptarmigan",
+      "scientific_name": "Lagopus leucura",
+      "tier": 1,
+      "regions": ["Jackalope Cordillera", "Lake Sasquatch"]
+    },
+    {
+      "name": "Eastern wild turkey",
+      "scientific_name": "Meleagris gallopavo silvestris",
+      "tier": 2,
+      "regions": ["Mishipeshu Swamp", "Slalakum Shore", "Thunderbird Muskeg", "Wetiko Foothills"]
+    },
+    {
+      "name": "American wolverine",
+      "scientific_name": "Gulo gulo luscus",
+      "tier": 3,
+      "regions": ["Jackalope Cordillera", "Kermode Plateau", "Slalakum Shore"]
+    },
+    {
+      "name": "Northwestern white-tailed deer",
+      "scientific_name": "Odocoileus virginianus borealis",
+      "tier": 4,
+      "regions": ["Lake Sasquatch", "Kermode Plateau", "Mishipeshu Swamp", "Slalakum Shore", "Wetiko Foothills"]
+    },
+    {
+      "name": "Rocky Mountain pronghorn",
+      "scientific_name": "Antilocapra americana americana",
+      "tier": 4,
+      "regions": ["Kermode Plateau", "Slalakum Shore"]
+    },
+    {
+      "name": "Northwestern wolf",
+      "scientific_name": "Canis lupus occidentalis",
+      "tier": 4,
+      "regions": ["Jackalope Cordillera", "Kermode Plateau", "Lake Sasquatch", "Mishipeshu Swamp", "Slalakum Shore", "Thunderbird Muskeg", "Wetiko Foothills"]
+    },
+    {
+      "name": "Central European boar",
+      "scientific_name": "Sus scrofa scrofa",
+      "tier": 5,
+      "regions": ["Lake Sasquatch", "Mishipeshu Swamp", "Slalakum Shore", "Wetiko Foothills"]
+    },
+    {
+      "name": "Dall sheep",
+      "scientific_name": "Ovis dalli dalli",
+      "tier": 5,
+      "regions": ["Jackalope Cordillera", "Lake Sasquatch", "Kermode Plateau"]
+    },
+    {
+      "name": "Rocky Mountain mule deer",
+      "scientific_name": "Odocoileus hemionus hemionus",
+      "tier": 6,
+      "regions": ["Jackalope Cordillera", "Kermode Plateau", "Slalakum Shore", "Wetiko Foothills"]
+    },
+    {
+      "name": "Grizzly bear",
+      "scientific_name": "Ursus arctos horribilis",
+      "tier": 7,
+      "regions": ["Jackalope Cordillera", "Kermode Plateau", "Lake Sasquatch"]
+    },
+    {
+      "name": "Rocky Mountain elk",
+      "scientific_name": "Cervus canadensis nelsoni",
+      "tier": 7,
+      "regions": ["Kermode Plateau", "Slalakum Shore", "Wetiko Foothills"]
+    },
+    {
+      "name": "Western moose",
+      "scientific_name": "Alces alces andersoni",
+      "tier": 8,
+      "regions": ["Mishipeshu Swamp", "Thunderbird Muskeg"]
+    },
+    {
+      "name": "Wood bison",
+      "scientific_name": "Bison bison athabascae",
+      "tier": 8,
+      "regions": ["Kermode Plateau", "Slalakum Shore"]
+    }
+  ]
+}
