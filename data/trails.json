@@ -1,0 +1,6 @@
+data/trails.json
+├── species_id
+├── season (Summer | Winter)
+├── trail_type (Grazing Corridor | Water Path | Ridge Transition)
+├── hoof_direction_rule ("V-split points towards movement direction")
+└── waypoints [ [lat, lng], ... ]
