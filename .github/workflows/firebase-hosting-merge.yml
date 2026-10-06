@@ -1,0 +1,24 @@
+# Line 1: Way of the Hunter 2 - GitHub to Firebase Hosting Live Deployment
+# Stamped: 2026-10-05 21:26 EDT | Version: 2.3.0
+
+name: Deploy to Firebase Hosting on Merge
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ENTERTAINMENT_71888 }}'
+          channelId: live
+          projectId: entertainment-71888
