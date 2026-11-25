@@ -84,15 +84,15 @@ footer a:hover{color:var(--gold)}
 <script>
 (function () {
   var games = [
-    { k: 'cotw', t: 'theHunter: Call of the Wild', p: 'PS5 &middot; PS4 &middot; Xbox &middot; PC', d: 'Collectibles, objectives, co-op squad notes and live PSN telemetry for the hunting sim.' },
-    { k: 'farcry5', t: 'Far Cry 5', p: 'PS4 &middot; Xbox &middot; PC', d: 'Progress tracker with collectibles, mission notes and squad ledgers for Hope County.' },
-    { k: 'ghostoftsushima', t: 'Ghost of Tsushima', p: 'PS5 &middot; PS4', d: 'Collectibles, objectives and progress notes across the island of Tsushima.' },
-    { k: 'sniperelite4', t: 'Sniper Elite 4', p: 'PS4 &middot; Xbox &middot; PC', d: 'Mission progress, collectibles and co-op notes for the Italian campaign.' },
-    { k: 'sniperelite5', t: 'Sniper Elite 5', p: 'PS5 &middot; PS4 &middot; Xbox &middot; PC', d: 'Mission progress, collectibles and co-op notes for the French campaign.' },
-    { k: 'snresistance', t: 'Sniper Elite: Resistance', p: 'PS5 &middot; Xbox &middot; PC', d: 'Mission progress, collectibles and co-op notes for the Resistance campaign.' },
-    { k: 'wdlegion', t: 'Watch Dogs: Legion', p: 'PS5 &middot; PS4 &middot; Xbox &middot; PC', d: 'Collectibles, objectives and squad notes for near-future London.' },
-    { k: 'wildlands', t: 'Ghost Recon Wildlands', p: 'PS4 &middot; Xbox &middot; PC', d: 'Collectibles, objectives and co-op notes across the Bolivian map.' },
-    { k: 'woth2', t: 'Way of the Hunter 2 tracker', p: 'PS5 &middot; Xbox &middot; PC', d: 'The shorter progress tracker for WOTH2, separate from the full field companion above.' }
+    { k: 'cotw', t: 'theHunter: Call of the Wild', p: 'PS5 · PS4 · Xbox · PC', d: 'Collectibles, objectives, co-op squad notes and live PSN telemetry for the hunting sim.' },
+    { k: 'farcry5', t: 'Far Cry 5', p: 'PS4 · Xbox · PC', d: 'Progress tracker with collectibles, mission notes and squad ledgers for Hope County.' },
+    { k: 'ghostoftsushima', t: 'Ghost of Tsushima', p: 'PS5 · PS4', d: 'Collectibles, objectives and progress notes across the island of Tsushima.' },
+    { k: 'sniperelite4', t: 'Sniper Elite 4', p: 'PS4 · Xbox · PC', d: 'Mission progress, collectibles and co-op notes for the Italian campaign.' },
+    { k: 'sniperelite5', t: 'Sniper Elite 5', p: 'PS5 · PS4 · Xbox · PC', d: 'Mission progress, collectibles and co-op notes for the French campaign.' },
+    { k: 'snresistance', t: 'Sniper Elite: Resistance', p: 'PS5 · Xbox · PC', d: 'Mission progress, collectibles and co-op notes for the Resistance campaign.' },
+    { k: 'wdlegion', t: 'Watch Dogs: Legion', p: 'PS5 · PS4 · Xbox · PC', d: 'Collectibles, objectives and squad notes for near-future London.' },
+    { k: 'wildlands', t: 'Ghost Recon Wildlands', p: 'PS4 · Xbox · PC', d: 'Collectibles, objectives and co-op notes across the Bolivian map.' },
+    { k: 'woth2', t: 'Way of the Hunter 2 tracker', p: 'PS5 · Xbox · PC', d: 'The shorter progress tracker for WOTH2, separate from the full field companion above.' }
   ];
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   document.getElementById('games').innerHTML = games.map(function (g) {
